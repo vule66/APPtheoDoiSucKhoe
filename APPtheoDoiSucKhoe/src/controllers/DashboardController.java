@@ -19,16 +19,18 @@ public class DashboardController {
     @FXML private Label weightText;
     @FXML private Label bloodPressureText;
     @FXML private Label sleepText;
+    @FXML private Label stepsText;
+    @FXML private Label caloriesText;
+    @FXML private Label heartRateText;
+    @FXML private Label waterIntakeText;
     @FXML private VBox dataBox;
     @FXML private VBox noDataBox;
 
     private final HealthEntryService entryService = new HealthEntryService();
 
-    // Trong DashboardController.java
     public void setCurrentUser(User user) {
         welcomeText.setText("Welcome back, " + user.getFullName() + "!");
-        // Sửa dòng này:
-        loadLatestHealthData(user.getId()); // Thay .getUserId() bằng .getId()
+        loadLatestHealthData(user.getId());
     }
 
     private void loadLatestHealthData(int userId) {
@@ -36,7 +38,6 @@ public class DashboardController {
             Optional<HealthEntry> latestEntryOpt = entryService.findLatestEntryByUserId(userId);
 
             if (latestEntryOpt.isPresent()) {
-                // Nếu có dữ liệu, hiển thị hộp dữ liệu và ẩn hộp "No Data"
                 dataBox.setVisible(true);
                 dataBox.setManaged(true);
                 noDataBox.setVisible(false);
@@ -44,7 +45,6 @@ public class DashboardController {
 
                 populateDashboard(latestEntryOpt.get());
             } else {
-                // Nếu không có dữ liệu, làm ngược lại
                 dataBox.setVisible(false);
                 dataBox.setManaged(false);
                 noDataBox.setVisible(true);
@@ -52,7 +52,6 @@ public class DashboardController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Xử lý lỗi nếu không thể truy vấn database
             dataBox.setVisible(false);
             noDataBox.setVisible(true);
             noDataBox.getChildren().setAll(new Label("Error: Could not connect to the database."));
@@ -60,13 +59,16 @@ public class DashboardController {
     }
 
     private void populateDashboard(HealthEntry entry) {
-        // Định dạng ngày tháng cho đẹp hơn
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        lastEntryDateText.setText("Last entry on: " + entry.getEntryDate().format(formatter));
+        lastEntryDateText.setText("Last entry on: " + entry.getRecordDate().format(formatter));
 
-        // Hiển thị dữ liệu, có kiểm tra null để tránh lỗi
-        weightText.setText(entry.getWeightKg() != null ? String.format("%.1f kg", entry.getWeightKg()) : "- kg");
+        weightText.setText(entry.getWeight() != null ? String.format("%.1f kg", entry.getWeight()) : "- kg");
         bloodPressureText.setText(entry.getBloodPressure() != null && !entry.getBloodPressure().isEmpty() ? entry.getBloodPressure() : "- / -");
-        sleepText.setText(entry.getHoursSlept() != null ? String.format("%.1f hrs", entry.getHoursSlept()) : "- hrs");
+        sleepText.setText(entry.getSleepHours() != null ? String.format("%.1f hrs", entry.getSleepHours()) : "- hrs");
+        // Bổ sung các dòng này:
+        stepsText.setText(entry.getSteps() != null ? String.valueOf(entry.getSteps()) : "-");
+        heartRateText.setText(entry.getHeartRate() != null ? String.valueOf(entry.getHeartRate()) : "-");
+        caloriesText.setText(entry.getCalories() != null ? String.valueOf(entry.getCalories()) : "-");
+        waterIntakeText.setText(entry.getWaterIntake() != null ? String.format("%.2f", entry.getWaterIntake()) : "-");
     }
 }

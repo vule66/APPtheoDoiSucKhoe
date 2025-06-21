@@ -13,7 +13,11 @@ import models.HealthEntry;
 import models.User;
 import services.HealthEntryService;
 import services.UserService;
+import database.DatabaseManager;  // Thêm import này
 
+import java.sql.Connection;        // Thêm 3 import này
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +36,10 @@ public class DataEntryController {
     @FXML private Text bmiCategoryLabel;
     @FXML private Text weightChangeLabel;
     @FXML private VBox historyVBox;
+    @FXML private TextField stepsField;
+    @FXML private TextField heartRateField;
+    @FXML private TextField caloriesField;
+    @FXML private TextField waterIntakeField;
 
     private User currentUser;
     private final HealthEntryService entryService = new HealthEntryService();
@@ -54,6 +62,34 @@ public class DataEntryController {
 
         loadEntryForDate(datePicker.getValue());
         updateSidePanel();
+    }
+
+    // Chỉ giữ một phiên bản của debugDatabase()
+    @FXML
+    private void debugDatabase() {
+        try {
+            Connection conn = DatabaseManager.getInstance().getConnection();
+            // Kiểm tra bảng có tồn tại không
+            Statement checkStmt = conn.createStatement();
+            ResultSet rs = checkStmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='health_data'");
+            boolean tableExists = rs.next();
+            System.out.println("Table health_data exists: " + tableExists);
+            rs.close();
+
+            if (tableExists) {
+                // Thử INSERT trực tiếp
+                String sql = "INSERT INTO health_data (user_id, record_date, weight, systolic_bp, diastolic_bp, sleep_hours) " +
+                        "VALUES (1, '2025-06-21', 70.5, 120, 80, 7.5)";
+                Statement stmt = conn.createStatement();
+                int result = stmt.executeUpdate(sql);
+                System.out.println("Manual insert result: " + result + " rows affected");
+            } else {
+                System.err.println("ERROR: Table health_data does not exist!");
+            }
+        } catch (SQLException e) {
+            System.err.println("Debug INSERT error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -95,26 +131,114 @@ public class DataEntryController {
             bloodPressure = null;
         }
 
-        HealthEntry entry = new HealthEntry(currentUser.getId(), entryDate, weight, bloodPressure, sleep);
+        Integer systolicBp = null;
+        Integer diastolicBp = null;
+        if (bloodPressure != null && !bloodPressure.isEmpty()) {
+            String[] parts = bloodPressure.split("/");
+            if (parts.length == 2) {
+                try {
+                    systolicBp = Integer.parseInt(parts[0].trim());
+                    diastolicBp = Integer.parseInt(parts[1].trim());
+                } catch (NumberFormatException e) {
+                    showStatusMessage("Error: Invalid blood pressure format. Use systolic/diastolic format.", true);
+                    return;
+                }
+            } else {
+                showStatusMessage("Error: Invalid blood pressure format. Use systolic/diastolic format.", true);
+                return;
+            }
+        }
+
+        // Thêm phần xử lý các trường mới
+        Integer steps = null;
+        if (stepsField != null && !stepsField.getText().trim().isEmpty()) {
+            try {
+                steps = Integer.parseInt(stepsField.getText().trim());
+            } catch (NumberFormatException e) {
+                showStatusMessage("Error: Invalid number for Steps.", true);
+                return;
+            }
+        }
+
+        Integer heartRate = null;
+        if (heartRateField != null && !heartRateField.getText().trim().isEmpty()) {
+            try {
+                heartRate = Integer.parseInt(heartRateField.getText().trim());
+            } catch (NumberFormatException e) {
+                showStatusMessage("Error: Invalid number for Heart Rate.", true);
+                return;
+            }
+        }
+
+        Integer calories = null;
+        if (caloriesField != null && !caloriesField.getText().trim().isEmpty()) {
+            try {
+                calories = Integer.parseInt(caloriesField.getText().trim());
+            } catch (NumberFormatException e) {
+                showStatusMessage("Error: Invalid number for Calories.", true);
+                return;
+            }
+        }
+
+        Double waterIntake = null;
+        if (waterIntakeField != null && !waterIntakeField.getText().trim().isEmpty()) {
+            try {
+                waterIntake = Double.parseDouble(waterIntakeField.getText().trim().replace(',', '.'));
+            } catch (NumberFormatException e) {
+                showStatusMessage("Error: Invalid number for Water Intake.", true);
+                return;
+            }
+        }
+
+        // Tạo đối tượng HealthEntry (CHỈ TẠO MỘT LẦN)
+        // XÓA dòng tạo entry ở đây nếu đã có
+
+        // Sử dụng constructor mới với các trường cơ bản
+        HealthEntry entry = new HealthEntry(currentUser.getId(), entryDate);
+        entry.setWeight(weight);
+        entry.setSystolicBp(systolicBp);
+        entry.setDiastolicBp(diastolicBp);
+        entry.setSleepHours(sleep);
+
+        // Set các giá trị mới
+        entry.setSteps(steps);
+        entry.setHeartRate(heartRate);
+        entry.setCalories(calories);
+        entry.setWaterIntake(waterIntake);
+
+        System.out.println("DEBUG - Entry created: " + entry);
+
         try {
+            // Gọi phương thức lưu thực sự
             entryService.saveOrUpdateEntry(entry);
             showStatusMessage("Entry saved successfully!", false);
             updateSidePanel();
         } catch (SQLException e) {
-            showStatusMessage("Database could not save entry.", true);
+            showStatusMessage("Database error: " + e.getMessage(), true);
+            System.err.println("SQL ERROR: " + e.getMessage());
+            System.err.println("SQL State: " + e.getSQLState());
+            System.err.println("Error Code: " + e.getErrorCode());
             e.printStackTrace();
         }
     }
 
+
+    // Phần code còn lại giữ nguyên
     private void loadEntryForDate(LocalDate date) {
         if (currentUser == null) return;
         try {
             Optional<HealthEntry> entryOpt = entryService.findEntryByUserIdAndDate(currentUser.getId(), date);
             if (entryOpt.isPresent()) {
                 HealthEntry entry = entryOpt.get();
-                weightField.setText(entry.getWeightKg() != null ? String.valueOf(entry.getWeightKg()) : "");
+                weightField.setText(entry.getWeight() != null ? String.valueOf(entry.getWeight()) : "");
                 bloodPressureField.setText(entry.getBloodPressure() != null ? entry.getBloodPressure() : "");
-                sleepField.setText(entry.getHoursSlept() != null ? String.valueOf(entry.getHoursSlept()) : "");
+                sleepField.setText(entry.getSleepHours() != null ? String.valueOf(entry.getSleepHours()) : "");
+
+                // Điền các trường mới
+                stepsField.setText(entry.getSteps() != null ? String.valueOf(entry.getSteps()) : "");
+                heartRateField.setText(entry.getHeartRate() != null ? String.valueOf(entry.getHeartRate()) : "");
+                caloriesField.setText(entry.getCalories() != null ? String.valueOf(entry.getCalories()) : "");
+                waterIntakeField.setText(entry.getWaterIntake() != null ? String.valueOf(entry.getWaterIntake()) : "");
             } else {
                 clearForm();
             }
@@ -123,6 +247,7 @@ public class DataEntryController {
             showStatusMessage("Error: Could not load data.", true);
         }
     }
+
 
     private void updateSidePanel() {
         if (currentUser == null) return;
@@ -137,14 +262,12 @@ public class DataEntryController {
     }
 
     private void updateBmi(List<HealthEntry> recentEntries) {
-        // <<< ĐÂY LÀ DÒNG ĐÃ SỬA LỖI >>>
-        // Đã xóa bỏ `currentUser.getHeight() == null` vì getHeight() trả về kiểu `double`
-        if (currentUser.getHeight() <= 0 || recentEntries.isEmpty() || recentEntries.get(0).getWeightKg() == null) {
+        if (currentUser.getHeight() <= 0 || recentEntries.isEmpty() || recentEntries.get(0).getWeight() == null) {
             bmiValueLabel.setText("--");
             bmiCategoryLabel.setText("Need height & weight");
             return;
         }
-        Double latestWeight = recentEntries.get(0).getWeightKg();
+        Double latestWeight = recentEntries.get(0).getWeight();
         double heightM = currentUser.getHeight() / 100.0;
         double bmi = latestWeight / (heightM * heightM);
         bmiValueLabel.setText(String.format("%.1f", bmi));
@@ -158,13 +281,13 @@ public class DataEntryController {
     }
 
     private void updateWeightChange(List<HealthEntry> recentEntries) {
-        if (recentEntries.size() < 2 || recentEntries.get(0).getWeightKg() == null || recentEntries.get(1).getWeightKg() == null) {
+        if (recentEntries.size() < 2 || recentEntries.get(0).getWeight() == null || recentEntries.get(1).getWeight() == null) {
             weightChangeLabel.setText("No previous data");
             weightChangeLabel.setStyle("-fx-fill: #6b7280;");
             return;
         }
-        Double currentWeight = recentEntries.get(0).getWeightKg();
-        Double previousWeight = recentEntries.get(1).getWeightKg();
+        Double currentWeight = recentEntries.get(0).getWeight();
+        Double previousWeight = recentEntries.get(1).getWeight();
         double change = currentWeight - previousWeight;
         weightChangeLabel.setText(String.format("%+.1f kg", change));
         weightChangeLabel.setStyle(change > 0 ? "-fx-fill: #ef4444;" : (change < 0 ? "-fx-fill: #16a34a;" : "-fx-fill: #6b7280;"));
@@ -181,8 +304,8 @@ public class DataEntryController {
             Label dateLabel = new Label(entry.getEntryDate().format(formatter));
             dateLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #374151;");
 
-            String weightStr = entry.getWeightKg() != null ? entry.getWeightKg() + " kg" : "N/A";
-            String sleepStr = entry.getHoursSlept() != null ? entry.getHoursSlept() + " h" : "N/A";
+            String weightStr = entry.getWeight() != null ? entry.getWeight() + " kg" : "N/A";
+            String sleepStr = entry.getSleepHours() != null ? entry.getSleepHours() + " h" : "N/A";
             String bpStr = entry.getBloodPressure() != null && !entry.getBloodPressure().isEmpty() ? entry.getBloodPressure() : "N/A";
             Label detailsLabel = new Label(String.format("Wt: %s • Sl: %s • BP: %s", weightStr, sleepStr, bpStr));
             detailsLabel.setStyle("-fx-text-fill: #6b7280;");
@@ -205,5 +328,10 @@ public class DataEntryController {
         weightField.clear();
         bloodPressureField.clear();
         sleepField.clear();
+        stepsField.clear();
+        heartRateField.clear();
+        caloriesField.clear();
+        waterIntakeField.clear();
     }
+
 }

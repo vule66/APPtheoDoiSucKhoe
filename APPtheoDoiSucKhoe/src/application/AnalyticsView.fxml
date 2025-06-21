@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnalyticsController">
+
+    <children>
+        <ScrollPane fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <content>
+                <VBox spacing="25.0">
+                    <padding>
+                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                    </padding>
+                    <children>
+                        <!-- Header -->
+                        <VBox spacing="5.0">
+                            <children>
+                                <Text fill="#1e293b" strokeType="OUTSIDE" strokeWidth="0.0" text="Health Analytics">
+                                    <font>
+                                        <Font name="System Bold" size="32.0" />
+                                    </font>
+                                </Text>
+                                <Text fill="#64748b" strokeType="OUTSIDE" strokeWidth="0.0" text="Track your health metrics over time and discover trends in your data.">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                        </VBox>
+
+                        <!-- Time Period Selector -->
+                        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+                            <children>
+                                <Label text="Time Period:" textFill="#475569">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox fx:id="timePeriodComboBox" prefWidth="150.0" promptText="Last 30 Days" />
+                                <Label text="From:" textFill="#475569">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="startDateLabel" text="YYYY-MM-DD" textFill="#0369a1" />
+                                <Label text="To:" textFill="#475569">
+                                    <HBox.margin>
+                                        <Insets left="10.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="endDateLabel" text="YYYY-MM-DD" textFill="#0369a1" />
+                                <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#handleRefresh" styleClass="button-primary" text="Refresh Data">
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>
+
+                        <!-- Stats Summary -->
+                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+                            <children>
+                                <Label text="SUMMARY STATISTICS" textFill="#475569">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <GridPane hgap="30.0" vgap="15.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <!-- Weight Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            <children>
+                                                <Label text="Weight" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgWeightLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="kg avg" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <HBox spacing="15.0">
+                                                    <children>
+                                                        <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Text fill="#10b981" strokeType="OUTSIDE" strokeWidth="0.0" text="↓">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Text>
+                                                                <Label fx:id="minWeightLabel" text="--" textFill="#10b981">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Text fill="#ef4444" strokeType="OUTSIDE" strokeWidth="0.0" text="↑">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Text>
+                                                                <Label fx:id="maxWeightLabel" text="--" textFill="#ef4444">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Blood Pressure Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                            <children>
+                                                <Label text="Blood Pressure" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgBpLabel" text="--/--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="avg" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <Text fx:id="bpCategoryText" fill="#64748b" strokeType="OUTSIDE" strokeWidth="0.0" text="Normal range">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Heart Rate Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                                            <children>
+                                                <Label text="Heart Rate" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgHrLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="bpm avg" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <HBox spacing="15.0">
+                                                    <children>
+                                                        <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Text fill="#10b981" strokeType="OUTSIDE" strokeWidth="0.0" text="↓">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Text>
+                                                                <Label fx:id="minHrLabel" text="--" textFill="#10b981">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                            <children>
+                                                                <Text fill="#ef4444" strokeType="OUTSIDE" strokeWidth="0.0" text="↑">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Text>
+                                                                <Label fx:id="maxHrLabel" text="--" textFill="#ef4444">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Steps Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                                            <children>
+                                                <Label text="Steps" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgStepsLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="avg/day" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="stepsGoalLabel" text="0% of 10,000 goal" textFill="#64748b">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Sleep Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Sleep" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgSleepLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="hrs avg" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="sleepQualityLabel" text="Good quality" textFill="#10b981">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Calories Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Calories" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgCaloriesLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="kcal avg" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="caloriesTrendLabel" text="Maintaining" textFill="#64748b">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Water Intake Stats -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Water Intake" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="avgWaterLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="L avg" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="waterGoalLabel" text="0% of 2.5L goal" textFill="#64748b">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Data Completeness -->
+                                        <VBox spacing="5.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                            <children>
+                                                <Label text="Data Completeness" textFill="#64748b">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="BASELINE_LEFT" spacing="5.0">
+                                                    <children>
+                                                        <Label fx:id="dataCompletenessLabel" text="--" textFill="#0f172a">
+                                                            <font>
+                                                                <Font name="System Bold" size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label text="%%" textFill="#64748b">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </HBox>
+                                                <Label fx:id="daysLoggedLabel" text="0 days logged" textFill="#64748b">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </VBox>
+
+                        <!-- Charts -->
+                        <TabPane style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                            <tabs>
+                                <Tab text="Body Metrics">
+                                    <content>
+                                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+                                            <children>
+                                                <!-- Weight Chart -->
+                                                <LineChart fx:id="weightChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="300.0" title="Weight Over Time">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" autoRanging="false" label="Weight (kg)" side="LEFT" />
+                                                    </yAxis>
+                                                </LineChart>
+
+                                                <Separator />
+
+                                                <!-- Blood Pressure Chart -->
+                                                <LineChart fx:id="bpChart" animated="false" createSymbols="true" prefHeight="300.0" title="Blood Pressure Over Time">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" label="mmHg" side="LEFT" />
+                                                    </yAxis>
+                                                </LineChart>
+
+                                                <Separator />
+
+                                                <!-- Heart Rate Chart -->
+                                                <LineChart fx:id="heartRateChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="300.0" title="Heart Rate Over Time">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" label="Heart Rate (bpm)" side="LEFT" />
+                                                    </yAxis>
+                                                </LineChart>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                                <Tab text="Activity &amp; Rest">
+                                    <content>
+                                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+                                            <children>
+                                                <!-- Steps Chart -->
+                                                <BarChart fx:id="stepsChart" animated="false" legendVisible="false" prefHeight="300.0" title="Daily Steps">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" label="Steps" side="LEFT" />
+                                                    </yAxis>
+                                                </BarChart>
+
+                                                <Separator />
+
+                                                <!-- Sleep Chart -->
+                                                <LineChart fx:id="sleepChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="300.0" title="Sleep Duration">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" label="Hours" side="LEFT" />
+                                                    </yAxis>
+                                                </LineChart>
+
+                                                <Separator />
+
+                                                <!-- Calories Chart -->
+                                                <BarChart fx:id="caloriesChart" animated="false" legendVisible="false" prefHeight="300.0" title="Daily Calories">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" label="Calories (kcal)" side="LEFT" />
+                                                    </yAxis>
+                                                </BarChart>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                                <Tab text="Hydration">
+                                    <content>
+                                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;">
+                                            <children>
+                                                <!-- Water Intake Chart -->
+                                                <LineChart fx:id="waterChart" animated="false" createSymbols="true" legendVisible="false" prefHeight="300.0" title="Water Intake">
+                                                    <xAxis>
+                                                        <CategoryAxis animated="false" label="Date" side="BOTTOM" />
+                                                    </xAxis>
+                                                    <yAxis>
+                                                        <NumberAxis animated="false" label="Liters" side="LEFT" />
+                                                    </yAxis>
+                                                </LineChart>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+
+                        <!-- No Data Message -->
+                        <VBox fx:id="noDataBox" alignment="CENTER" managed="false" style="-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;" visible="false">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No Data Available">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Text>
+                                <Text fill="#64748b" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter health data regularly to see analytics and trends." textAlignment="CENTER" wrappingWidth="300.0" />
+
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

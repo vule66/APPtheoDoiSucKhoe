@@ -134,6 +134,9 @@ public class HealthTrackerController implements Initializable {
             } else if (controller instanceof DataEntryController) {
                 ((DataEntryController) controller).setCurrentUser(this.currentUser);
             }
+            else if (controller instanceof AnalyticsController) {
+                ((AnalyticsController) controller).setCurrentUser(this.currentUser);
+            }
             // Thêm các trường hợp else if cho các controller khác trong tương lai
 
             mainContentPane.getChildren().setAll(view);
@@ -185,8 +188,8 @@ public class HealthTrackerController implements Initializable {
         try {
             if (clockTimeline != null) clockTimeline.stop();
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
-            // Sửa lại đường dẫn nếu cần, ví dụ /views/LoginView.fxml
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("/application/LoginView.fxml"));
+            // Tải màn hình đăng nhập
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/application/Login.fxml"));
             Scene loginScene = new Scene(loginRoot);
             stage.setScene(loginScene);
             stage.setTitle("Health Tracker Pro - Login");
@@ -195,6 +198,7 @@ public class HealthTrackerController implements Initializable {
             stage.centerOnScreen();
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error loading login view: " + e.getMessage());
         }
     }
 }

@@ -3,29 +3,39 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashboardController">
+<?import java.lang.String?>
+<AnchorPane style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DashboardController">
+    <stylesheets>
+        <String fx:value="/application/styles.css" />
+    </stylesheets>
     <children>
-        <VBox alignment="TOP_CENTER" spacing="30.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+        <VBox spacing="30.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
             <children>
-                <VBox alignment="CENTER" prefWidth="100.0" spacing="5.0">
+                <!-- Phần Tiêu đề -->
+                <VBox alignment="CENTER" spacing="5.0">
                     <children>
-                        <Text fx:id="welcomeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back!" textAlignment="CENTER" wrappingWidth="580.0">
+                        <Text fx:id="welcomeText" fill="#1e293b" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back!" textAlignment="CENTER" wrappingWidth="580.0">
                             <font>
                                 <Font name="System Bold" size="36.0" />
                             </font>
                         </Text>
-                        <Text fill="#6b7280" strokeType="OUTSIDE" strokeWidth="0.0" text="Here is a summary of your most recent health entry." textAlignment="CENTER" wrappingWidth="450.0">
+                        <Text fill="#64748b" strokeType="OUTSIDE" strokeWidth="0.0" text="Here is a summary of your most recent health data." textAlignment="CENTER" wrappingWidth="450.0">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </Text>
                     </children>
                 </VBox>
+
+                <!-- Thông báo khi không có dữ liệu -->
                 <VBox fx:id="noDataBox" alignment="CENTER" managed="false" style="-fx-border-color: #e2e8f0; -fx-border-radius: 12; -fx-background-color: white; -fx-background-radius: 12;" visible="false">
                     <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="No Data Yet">
@@ -33,62 +43,312 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Text>
-                        <Text fill="#6b7280" strokeType="OUTSIDE" strokeWidth="0.0" text="Go to the Data Entry section to log your first health metric." textAlignment="CENTER" wrappingWidth="300.0" />
+                        <Text fill="#64748b" strokeType="OUTSIDE" strokeWidth="0.0" text="Go to the Data Entry section to log your first health metric." textAlignment="CENTER" wrappingWidth="300.0" />
                     </children>
                     <padding>
                         <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
                     </padding>
                 </VBox>
-                <VBox fx:id="dataBox" spacing="20.0">
-                    <children>
-                        <Label fx:id="lastEntryDateText" style="-fx-font-weight: bold; -fx-font-size: 14;" text="Last entry on: YYYY-MM-DD" textFill="#374151" />
-                        <HBox spacing="25.0">
-                            <children>
-                                <VBox style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 4);" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label text="Weight" textFill="#6b7280">
-                                            <font>
-                                                <Font name="System Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="weightText" text="- kg">
-                                            <font>
-                                                <Font name="System Bold" size="32.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                                <VBox style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 4);" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label text="Blood Pressure" textFill="#6b7280">
-                                            <font>
-                                                <Font name="System Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="bloodPressureText" text="- / -">
-                                            <font>
-                                                <Font name="System Bold" size="32.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                                <VBox style="-fx-background-color: white; -fx-padding: 25; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 4);" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label text="Hours Slept" textFill="#6b7280">
-                                            <font>
-                                                <Font name="System Bold" size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="sleepText" text="- hrs">
-                                            <font>
-                                                <Font name="System Bold" size="32.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </HBox>
-                    </children>
+
+                <!-- Khu vực hiển thị dữ liệu -->
+                <VBox fx:id="dataBox" spacing="25.0">
+                    <!-- Ngày của bản ghi gần nhất -->
+                    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #e0f2fe; -fx-background-radius: 8; -fx-padding: 10 15 10 15;">
+                        <children>
+                            <Label fx:id="lastEntryDateText" style="-fx-font-weight: bold;" text="Last entry on: YYYY-MM-DD" textFill="#0369a1">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </HBox>
+
+                    <!-- Phần 1: Body Metrics -->
+                    <VBox spacing="15.0">
+                        <children>
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #475569;" text="BODY METRICS">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <HBox spacing="20.0">
+                                <children>
+                                    <!-- Card: Weight -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="⚖️" />
+                                                    <Label text="Weight" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="weightText" text="-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="kg" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- Card: Blood Pressure -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="❤️" />
+                                                    <Label text="Blood Pressure" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="bloodPressureText" text="-/-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="mmHg" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- Card: Heart Rate -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="💓" />
+                                                    <Label text="Heart Rate" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="heartRateText" text="-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="bpm" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <!-- Phần 2: Activity & Calories -->
+                    <VBox spacing="15.0">
+                        <children>
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #475569;" text="ACTIVITY &amp; CALORIES">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <GridPane hgap="20.0" vgap="20.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <!-- Card: Steps -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="👣" />
+                                                    <Label text="Steps" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="stepsText" text="-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="steps" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- Card: Calories -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);" GridPane.columnIndex="1">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="🔥" />
+                                                    <Label text="Calories" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="caloriesText" text="-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="kcal" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </GridPane>
+                        </children>
+                    </VBox>
+
+                    <!-- Phần 3: Rest & Hydration -->
+                    <VBox spacing="15.0">
+                        <children>
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #475569;" text="REST &amp; HYDRATION">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Label>
+                            <GridPane hgap="20.0" vgap="20.0">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <!-- Card: Sleep -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="😴" />
+                                                    <Label text="Sleep" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="sleepText" text="-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="hours" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- Card: Water Intake -->
+                                    <VBox style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #f1f5f9; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.04), 10, 0, 0, 4);" GridPane.columnIndex="1">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                                <children>
+                                                    <Label style="-fx-font-weight: bold;" text="💧" />
+                                                    <Label text="Water Intake" textFill="#64748b">
+                                                        <font>
+                                                            <Font name="System Bold" size="14.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                            </HBox>
+                                            <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                <children>
+                                                    <Label fx:id="waterIntakeText" text="-" textFill="#0f172a">
+                                                        <font>
+                                                            <Font name="System Bold" size="28.0" />
+                                                        </font>
+                                                    </Label>
+                                                    <Label text="liters" textFill="#64748b">
+                                                        <font>
+                                                            <Font size="16.0" />
+                                                        </font>
+                                                    </Label>
+                                                </children>
+                                                <padding>
+                                                    <Insets top="5.0" />
+                                                </padding>
+                                            </HBox>
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </GridPane>
+                        </children>
+                    </VBox>
                 </VBox>
             </children>
         </VBox>

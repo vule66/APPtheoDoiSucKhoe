@@ -3,7 +3,166 @@
   STYLESHEET "VIP ROBUST" - PHIÊN BẢN SỬA LỖI VÀ NÂNG CẤP
 ==============================================================
 */
+/* Base Styles */
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+}
 
+/* Page Sections */
+.page-container {
+    -fx-padding: 40 50 40 50;
+}
+
+.sidebar {
+    -fx-background-color: #f0f4f8;
+}
+
+/* Headers */
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: #1e293b;
+}
+
+.page-subtitle {
+    -fx-font-size: 15px;
+    -fx-fill: #64748b;
+}
+
+.section-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #64748b;
+    -fx-padding: 0 0 5 0;
+}
+
+/* Form Elements */
+.form-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+}
+
+.text-input-styled {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 4px;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14px;
+}
+
+.text-input-styled:focused {
+    -fx-background-color: white;
+    -fx-border-color: #3b82f6;
+}
+
+.unit-label {
+    -fx-fill: #64748b;
+    -fx-font-size: 14px;
+}
+
+/* Date Selector */
+.date-selector-box {
+    -fx-background-color: #f0f9ff;
+    -fx-background-radius: 8px;
+    -fx-border-color: #bae6fd;
+    -fx-border-radius: 8px;
+    -fx-padding: 12 15 12 15;
+}
+
+/* Cards */
+.metric-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8px;
+    -fx-padding: 15 20 15 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.03), 6, 0, 0, 2);
+}
+
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8px;
+    -fx-padding: 15 20 15 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 8, 0, 0, 2);
+}
+
+/* Stat Elements */
+.stat-value {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-fill: #0f172a;
+}
+
+.stat-label {
+    -fx-font-size: 15px;
+    -fx-fill: #64748b;
+}
+
+.caption-text {
+    -fx-font-size: 13px;
+    -fx-fill: #94a3b8;
+}
+
+/* Buttons */
+.button-primary {
+    -fx-background-color: #0ea5e9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 6px;
+}
+
+.button-primary:hover {
+    -fx-background-color: #0284c7;
+    -fx-cursor: hand;
+}
+
+.button-primary:pressed {
+    -fx-background-color: #0369a1;
+}
+
+/* Status Label */
+.status-label {
+    -fx-padding: 8 0 8 0;
+    -fx-min-width: 200px;
+}
+
+.status-label-success {
+    -fx-text-fill: #16a34a;
+    -fx-font-weight: bold;
+}
+
+.status-label-error {
+    -fx-text-fill: #dc2626;
+    -fx-font-weight: bold;
+}
+
+/* History Scroll Pane */
+.history-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.history-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.history-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.history-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 10px;
+}
+
+.history-scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #94a3b8;
+}
 /* --- STYLE CƠ BẢN CHO TẤT CẢ CÁC NÚT SIDEBAR --- */
 .sidebar-button {
     -fx-background-color: transparent;
@@ -226,4 +385,142 @@
 .status-label-error {
     -fx-text-fill: -error-color;
     -fx-font-weight: bold;
+}
+/* Bạn có thể thêm vào file styles.css hiện tại của bạn */
+
+/* Chart Styling */
+.chart {
+    -fx-padding: 10px;
+}
+
+.chart-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334155;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 20px;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #64748b;
+}
+
+.chart-plot-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8px;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #e2e8f0;
+    -fx-stroke-width: 1;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e2e8f0;
+    -fx-stroke-width: 1;
+}
+
+.axis {
+    -fx-tick-label-fill: #64748b;
+    -fx-tick-length: 3;
+}
+
+.axis-label {
+    -fx-text-fill: #475569;
+}
+
+/* LineChart specific */
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-series-line { -fx-stroke: #3b82f6; }
+.default-color1.chart-series-line { -fx-stroke: #ef4444; }
+.default-color2.chart-series-line { -fx-stroke: #10b981; }
+
+.default-color0.chart-line-symbol { -fx-background-color: #3b82f6, white; }
+.default-color1.chart-line-symbol { -fx-background-color: #ef4444, white; }
+.default-color2.chart-line-symbol { -fx-background-color: #10b981, white; }
+
+/* BarChart specific */
+.chart-bar {
+    -fx-bar-fill: #3b82f6;
+    -fx-background-radius: 5;
+}
+
+.default-color0.chart-bar { -fx-bar-fill: #3b82f6; }
+.default-color1.chart-bar { -fx-bar-fill: #ef4444; }
+.default-color2.chart-bar { -fx-bar-fill: #10b981; }
+
+/* Tab Pane styling */
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 10 20;
+}
+
+.tab:selected {
+    -fx-background-color: white;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #0369a1;
+    -fx-font-weight: bold;
+}
+
+.tab-content-area {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* Button styling */
+.button-primary {
+    -fx-background-color: #0284c7;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8 16;
+}
+
+.button-primary:hover {
+    -fx-background-color: #0369a1;
+    -fx-cursor: hand;
+}
+
+.button-primary:pressed {
+    -fx-background-color: #075985;
+}
+
+/* Combo Box styling */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #cbd5e1;
+    -fx-border-radius: 4px;
+    -fx-padding: 2px;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #334155;
+}
+
+.combo-box:hover {
+    -fx-border-color: #94a3b8;
+}
+
+.combo-box:focused {
+    -fx-border-color: #3b82f6;
 }

@@ -39,9 +39,6 @@ public class HealthTrackerApp extends Application {
             primaryStage.centerOnScreen();
             primaryStage.show();
 
-            System.out.println("✅ Health Tracker Application started successfully!");
-            System.out.println("🔑 Default login: vule66 / 123456");
-
         } catch(Exception e) {
             System.out.println("❌ Error starting application: " + e.getMessage());
             e.printStackTrace();
@@ -70,9 +67,7 @@ public class HealthTrackerApp extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("====================================");
-        System.out.println("🏥 HEALTH TRACKER PRO v1.0");
-        System.out.println("====================================");
+
         launch(args);
     }
 }
