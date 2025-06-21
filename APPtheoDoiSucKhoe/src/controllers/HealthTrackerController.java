@@ -25,86 +25,62 @@ import java.util.ResourceBundle;
 
 public class HealthTrackerController implements Initializable {
 
-    // --- FXML Elements ---
+
     @FXML private StackPane mainContentPane;
     @FXML private Label userNameLabel;
     @FXML private Label userInitialsLabel;
     @FXML private Label dateTimeLabel;
-
-    // --- Navigation Buttons ---
     @FXML private Button dashboardBtn;
     @FXML private Button dataEntryBtn;
     @FXML private Button analyticsBtn;
     @FXML private Button goalsBtn;
     @FXML private Button historyBtn;
-    @FXML private Button settingsBtn;
     @FXML private Button logoutBtn;
-
-    // --- State Variables ---
     private Button currentActiveButton;
     private User currentUser;
     private Timeline clockTimeline;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // PHẦN KHỞI TẠO: Chỉ làm những việc không phụ thuộc vào người dùng
         startClock();
     }
 
-    /**
-     * Phương thức này là "cổng chính" nhận dữ liệu từ LoginController.
-     * Mọi hành động phụ thuộc vào User sẽ bắt đầu từ đây.
-     */
     public void setCurrentUser(User user) {
         this.currentUser = user;
         if (this.currentUser != null) {
             updateUserDisplay();
-            // SỬA LỖI: Tải Dashboard làm màn hình mặc định và KÍCH HOẠT nút.
-            // Chúng ta giả lập một cú click chuột lên nút Dashboard.
             handleMenuClick(new ActionEvent(dashboardBtn, dashboardBtn));
         } else {
             mainContentPane.getChildren().setAll(new Label("Critical Error: Could not load user data."));
         }
     }
 
-    /**
-     * PHƯƠNG THỨC XỬ LÝ MENU ĐÃ SỬA LỖI HOÀN CHỈNH.
-     * Đây là nơi bạn muốn sửa code.
-     */
     @FXML
     private void handleMenuClick(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
 
-        // Nếu nhấn lại nút đang sáng -> không làm gì cả
         if (clickedButton == currentActiveButton && mainContentPane.getChildren().size() > 0) {
             return;
         }
 
-        // SỬA LỖI LỚN: Bỏ cách suy luận tên file.
-        // Dùng if-else if để chỉ định chính xác tên file FXML.
         String fxmlFileToLoad = "";
         if (clickedButton == dashboardBtn) {
             fxmlFileToLoad = "/application/DashboardView.fxml";
         } else if (clickedButton == dataEntryBtn) {
-            // ĐÂY LÀ CHỖ SỬA QUAN TRỌNG NHẤT: Đảm bảo đúng tên file
+
             fxmlFileToLoad = "/application/DataEntryView.fxml";
         } else if (clickedButton == analyticsBtn) {
-            // Ví dụ cho các nút chưa làm
             fxmlFileToLoad = "/application/AnalyticsView.fxml";
         } else if (clickedButton == goalsBtn) {
             fxmlFileToLoad = "/application/GoalsView.fxml";
         } else if (clickedButton == historyBtn) {
             fxmlFileToLoad = "/application/HistoryView.fxml";
-        } else if (clickedButton == settingsBtn) {
-            fxmlFileToLoad = "/application/SettingsView.fxml";
         }
 
-        // Chỉ tải view và cập nhật nút khi có đường dẫn hợp lệ
         if (!fxmlFileToLoad.isEmpty()) {
             loadView(fxmlFileToLoad);
-            updateActiveButton(clickedButton); // Cập nhật nút sáng
+            updateActiveButton(clickedButton);
         } else {
-            // Xử lý cho các nút chưa có giao diện
             mainContentPane.getChildren().setAll(new Label("Feature coming soon for: " + clickedButton.getText()));
             updateActiveButton(clickedButton);
         }
@@ -116,7 +92,6 @@ public class HealthTrackerController implements Initializable {
             return;
         }
         try {
-            // Thêm kiểm tra null để chắc chắn file tồn tại
             URL resourceUrl = getClass().getResource(fxmlPath);
             if (resourceUrl == null) {
                 System.err.println("FATAL: FXML file not found at path: " + fxmlPath);
@@ -127,7 +102,6 @@ public class HealthTrackerController implements Initializable {
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             Node view = loader.load();
 
-            // Truyền currentUser cho các controller cần nó
             Object controller = loader.getController();
             if (controller instanceof DashboardController) {
                 ((DashboardController) controller).setCurrentUser(this.currentUser);
@@ -137,7 +111,12 @@ public class HealthTrackerController implements Initializable {
             else if (controller instanceof AnalyticsController) {
                 ((AnalyticsController) controller).setCurrentUser(this.currentUser);
             }
-            // Thêm các trường hợp else if cho các controller khác trong tương lai
+            else if (controller instanceof GoalsController) {
+                ((GoalsController) controller).setCurrentUser(this.currentUser);
+            }
+            else if (controller instanceof GoalDialogController) {
+                ((GoalDialogController) controller).setCurrentUser(this.currentUser);
+            }
 
             mainContentPane.getChildren().setAll(view);
 
@@ -155,7 +134,6 @@ public class HealthTrackerController implements Initializable {
         currentActiveButton = newActiveButton;
     }
 
-    // ----- CÁC PHƯƠNG THỨC KHÁC GIỮ NGUYÊN -----
 
     private void updateUserDisplay() {
         if (currentUser == null) return;

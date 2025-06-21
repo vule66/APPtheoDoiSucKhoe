@@ -74,12 +74,7 @@
                 <VBox spacing="15.0">
                     <padding><Insets bottom="20.0" left="10.0" right="10.0" /></padding>
                     <children>
-                        <Button fx:id="settingsBtn" onAction="#handleMenuClick" alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="45.0" prefWidth="280.0" text="⚙️  Settings">
-                            <styleClass>
-                                <String fx:value="sidebar-button" />
-                                <String fx:value="settings" />
-                            </styleClass>
-                        </Button>
+
                         <Button fx:id="logoutBtn" onAction="#handleLogout" alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="45.0" prefWidth="280.0" text="🚪  Logout" styleClass="logout-button" />
                     </children>
                 </VBox>

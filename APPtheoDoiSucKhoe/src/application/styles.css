@@ -1,8 +1,3 @@
-/*
-==============================================================
-  STYLESHEET "VIP ROBUST" - PHIÊN BẢN SỬA LỖI VÀ NÂNG CẤP
-==============================================================
-*/
 /* Base Styles */
 .root {
     -fx-font-family: 'Segoe UI', Arial, sans-serif;
@@ -386,9 +381,7 @@
     -fx-text-fill: -error-color;
     -fx-font-weight: bold;
 }
-/* Bạn có thể thêm vào file styles.css hiện tại của bạn */
 
-/* Chart Styling */
 .chart {
     -fx-padding: 10px;
 }
@@ -523,4 +516,245 @@
 
 .combo-box:focused {
     -fx-border-color: #3b82f6;
+}
+.refresh-button {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #475569;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-padding: 10px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+    -fx-transition-property: -fx-background-color, -fx-text-fill, -fx-border-color;
+    -fx-transition-duration: 0.2s;
+    -fx-transition-timing-function: ease-in-out;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #334155;
+    -fx-border-color: #cbd5e1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
+}
+
+.refresh-button:pressed {
+    -fx-background-color: #cbd5e1;
+    -fx-text-fill: #1e293b;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+/* --- PRIMARY BUTTON STYLING (ADD GOAL) --- */
+.primary-button {
+    -fx-background-color: linear-gradient(to bottom, #3b82f6, #2563eb);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 8, 0, 0, 2);
+    -fx-transition-property: -fx-background-color, -fx-effect;
+    -fx-transition-duration: 0.2s;
+    -fx-transition-timing-function: ease-in-out;
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #2563eb, #1d4ed8);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.4), 12, 0, 0, 4);
+}
+
+.primary-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #1d4ed8, #1e40af);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.2), 4, 0, 0, 1);
+}
+
+/* --- COMPLETION PROGRESS BAR STYLING --- */
+.completion-progress-bar {
+    -fx-background-color: #f1f5f9;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-background-insets: 0;
+}
+
+.completion-progress-bar .bar {
+    -fx-background-color: linear-gradient(to right, #10b981, #059669);
+    -fx-background-radius: 6px;
+    -fx-background-insets: 0;
+    -fx-padding: 6px;
+}
+
+/* --- ALTERNATIVE BUTTON VARIANTS (OPTIONAL) --- */
+
+/* Secondary Button Style (if needed) */
+.secondary-button {
+    -fx-background-color: white;
+    -fx-text-fill: #475569;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #d1d5db;
+    -fx-border-width: 1px;
+    -fx-padding: 10px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+.secondary-button:hover {
+    -fx-background-color: #f9fafb;
+    -fx-border-color: #9ca3af;
+    -fx-text-fill: #374151;
+}
+
+/* Success Button Style (for completed actions) */
+.success-button {
+    -fx-background-color: linear-gradient(to bottom, #10b981, #059669);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.3), 8, 0, 0, 2);
+}
+
+.success-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #059669, #047857);
+    -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.4), 12, 0, 0, 4);
+}
+
+/* Warning Button Style (for overdue items) */
+.warning-button {
+    -fx-background-color: linear-gradient(to bottom, #f59e0b, #d97706);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.3), 8, 0, 0, 2);
+}
+
+.warning-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #d97706, #b45309);
+    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.4), 12, 0, 0, 4);
+}
+
+/* Danger Button Style (for delete actions) */
+.danger-button {
+    -fx-background-color: linear-gradient(to bottom, #ef4444, #dc2626);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 16px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.3), 8, 0, 0, 2);
+}
+
+.danger-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #dc2626, #b91c1c);
+    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.4), 12, 0, 0, 4);
+}
+
+/* --- GOALS TABLE STYLING --- */
+.goals-table {
+    -fx-background-color: transparent;
+    -fx-table-cell-border-color: #f1f5f9;
+    -fx-selection-bar: #dbeafe;
+    -fx-selection-bar-non-focused: #f3f4f6;
+}
+
+.goals-table .column-header {
+    -fx-background-color: #f8fafc;
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+    -fx-border-color: #e5e7eb;
+    -fx-padding: 8px;
+}
+
+.goals-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #f1f5f9;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.goals-table .table-row-cell:selected {
+    -fx-background-color: #dbeafe;
+}
+
+.goals-table .table-row-cell:hover {
+    -fx-background-color: #f8fafc;
+}
+
+.goals-table .table-cell {
+    -fx-text-fill: #374151;
+    -fx-padding: 8px;
+    -fx-alignment: center-left;
+}
+
+/* --- SCROLL PANE STYLING --- */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 8px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e1;
+    -fx-background-radius: 4px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #94a3b8;
+}
+
+.scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+/* --- CHECKBOX STYLING --- */
+.check-box {
+    -fx-text-fill: #64748b;
+    -fx-font-size: 14px;
+}
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #3b82f6;
+    -fx-border-color: #3b82f6;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.check-box:hover .box {
+    -fx-border-color: #9ca3af;
+}
+
+@media screen and (max-width: 768px) {
+    .refresh-button, .primary-button {
+        -fx-font-size: 12px;
+        -fx-padding: 8px 12px;
+    }
 }

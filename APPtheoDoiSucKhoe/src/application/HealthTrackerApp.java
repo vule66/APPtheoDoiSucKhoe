@@ -16,17 +16,14 @@ public class HealthTrackerApp extends Application {
         try {
             System.out.println("🚀 Starting Health Tracker Application...");
 
-            // Initialize database first
             DatabaseManager.getInstance();
             System.out.println("✅ Database initialized successfully!");
 
-            // Load login screen
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
 
-            // Set application icon (optional)
             try {
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/app-icon.png")));
             } catch (Exception e) {
@@ -43,7 +40,6 @@ public class HealthTrackerApp extends Application {
             System.out.println("❌ Error starting application: " + e.getMessage());
             e.printStackTrace();
 
-            // Show error dialog
             Platform.runLater(() -> {
                 javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
                 alert.setTitle("Application Error");
@@ -57,7 +53,6 @@ public class HealthTrackerApp extends Application {
 
     @Override
     public void stop() {
-        // Close database connection when app closes
         try {
             DatabaseManager.getInstance().closeConnection();
             System.out.println("✅ Application closed and database disconnected.");
