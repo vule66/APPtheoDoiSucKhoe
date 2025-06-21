@@ -59,20 +59,6 @@ public class RegisterController implements Initializable {
         }
 
         setupEventHandlers();
-        setupSampleData(); // For testing
-    }
-
-    private void setupSampleData() {
-        // Auto-fill for testing
-        if (fullNameField != null) fullNameField.setText("Test User");
-        if (usernameField != null) usernameField.setText("testuser123");
-        if (emailField != null) emailField.setText("test@example.com");
-        if (passwordField != null) passwordField.setText("123456");
-        if (confirmPasswordField != null) confirmPasswordField.setText("123456");
-        if (ageField != null) ageField.setText("25");
-        if (genderCombo != null) genderCombo.setValue("Male");
-        if (heightField != null) heightField.setText("175");
-        System.out.println("✅ Sample data filled for testing");
     }
 
     private void setupEventHandlers() {
@@ -217,56 +203,56 @@ public class RegisterController implements Initializable {
         // Full name validation
         String fullName = fullNameField.getText().trim();
         if (fullName.length() < 2) {
-            errors.append("• Please enter your full name\n");
+            errors.append("• Please enter your full name\\n");
         }
 
         // Username validation
         String username = usernameField.getText().trim();
         if (username.length() < 4) {
-            errors.append("• Username must be at least 4 characters long\n");
+            errors.append("• Username must be at least 4 characters long\\n");
         }
 
         // Email validation
         String email = emailField.getText().trim();
         if (!isValidEmail(email)) {
-            errors.append("• Please enter a valid email address\n");
+            errors.append("• Please enter a valid email address\\n");
         }
 
         // Password validation
         String password = passwordField.getText();
         if (password.length() < 6) {
-            errors.append("• Password must be at least 6 characters long\n");
+            errors.append("• Password must be at least 6 characters long\\n");
         }
 
         // Confirm password validation
         String confirmPassword = confirmPasswordField.getText();
         if (!password.equals(confirmPassword)) {
-            errors.append("• Passwords do not match\n");
+            errors.append("• Passwords do not match\\n");
         }
 
         // Age validation
         try {
             int age = Integer.parseInt(ageField.getText());
             if (age < 13 || age > 120) {
-                errors.append("• Please enter a valid age (13-120)\n");
+                errors.append("• Please enter a valid age (13-120)\\n");
             }
         } catch (NumberFormatException e) {
-            errors.append("• Please enter a valid age\n");
+            errors.append("• Please enter a valid age\\n");
         }
 
         // Gender validation
         if (genderCombo.getValue() == null) {
-            errors.append("• Please select your gender\n");
+            errors.append("• Please select your gender\\n");
         }
 
         // Height validation
         try {
             double height = Double.parseDouble(heightField.getText());
             if (height < 100 || height > 250) {
-                errors.append("• Please enter a valid height (100-250 cm)\n");
+                errors.append("• Please enter a valid height (100-250 cm)\\n");
             }
         } catch (NumberFormatException e) {
-            errors.append("• Please enter a valid height\n");
+            errors.append("• Please enter a valid height\\n");
         }
 
         if (errors.length() > 0) {

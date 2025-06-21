@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DataEntryController">
+    <stylesheets>
+        <String fx:value="/application/styles.css" />
+    </stylesheets>
+    <children>
+        <HBox spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <!-- LEFT PANEL: DATA ENTRY FORM -->
+                <VBox styleClass="page-container" spacing="30.0" HBox.hgrow="ALWAYS">
+                    <children>
+                        <VBox spacing="5.0">
+                            <children>
+                                <Text styleClass="page-title" text="Daily Health Log" />
+                                <Text styleClass="page-subtitle" text="Update your daily metrics. Consistent tracking is key to success." />
+                            </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                            <children>
+                                <Label styleClass="form-label" text="Select Date:" />
+                                <DatePicker fx:id="datePicker" prefWidth="200.0" />
+                            </children>
+                        </HBox>
+                        <!-- <<< ĐÂY LÀ PHẦN ĐÃ SỬA LỖI >>> -->
+                        <!-- Đã xóa bỏ khối <rowConstraints> không cần thiết -->
+                        <GridPane hgap="20.0" vgap="20.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            </columnConstraints>
+                            <children>
+                                <VBox styleClass="metric-card" spacing="15.0">
+                                    <children>
+                                        <Label styleClass="form-label" text="Weight" />
+                                        <HBox alignment="BASELINE_LEFT" spacing="8.0">
+                                            <children>
+                                                <TextField fx:id="weightField" promptText="e.g., 70.5" styleClass="text-input-styled" HBox.hgrow="ALWAYS" />
+                                                <Text styleClass="unit-label" text="kg" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox styleClass="metric-card" spacing="15.0" GridPane.columnIndex="1">
+                                    <children>
+                                        <Label styleClass="form-label" text="Blood Pressure" />
+                                        <HBox alignment="BASELINE_LEFT" spacing="8.0">
+                                            <children>
+                                                <TextField fx:id="bloodPressureField" promptText="e.g., 120/80" styleClass="text-input-styled" HBox.hgrow="ALWAYS" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox styleClass="metric-card" spacing="15.0" GridPane.columnIndex="2">
+                                    <children>
+                                        <Label styleClass="form-label" text="Hours Slept" />
+                                        <HBox alignment="BASELINE_LEFT" spacing="8.0">
+                                            <children>
+                                                <TextField fx:id="sleepField" promptText="e.g., 7.5" styleClass="text-input-styled" HBox.hgrow="ALWAYS" />
+                                                <Text styleClass="unit-label" text="hours" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </GridPane>
+                        <HBox alignment="CENTER_RIGHT" spacing="10.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <Label fx:id="statusLabel" />
+                                <Button fx:id="saveButton" onAction="#saveEntry" styleClass="button-primary" text="Save Changes" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- RIGHT PANEL: STATS & HISTORY -->
+                <VBox prefWidth="320.0" spacing="20.0" style="-fx-background-color: #f1f5f9; -fx-padding: 40 30 40 30;">
+                    <children>
+                        <Label styleClass="form-label" text="QUICK STATS" />
+                        <VBox styleClass="metric-card" spacing="10.0">
+                            <children>
+                                <Label styleClass="form-label" text="Body Mass Index (BMI)" />
+                                <HBox alignment="BASELINE_LEFT" spacing="8.0">
+                                    <children>
+                                        <Text fx:id="bmiValueLabel" style="-fx-font-size: 28; -fx-font-weight: bold;" text="--" />
+                                        <Text fx:id="bmiCategoryLabel" styleClass="unit-label" text="N/A" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox styleClass="metric-card" spacing="10.0">
+                            <children>
+                                <Label styleClass="form-label" text="Weight Change" />
+                                <Text fx:id="weightChangeLabel" style="-fx-font-size: 28; -fx-font-weight: bold;" text="--" />
+                                <Label styleClass="page-subtitle" text="Compared to last entry" />
+                            </children>
+                        </VBox>
+                        <Separator />
+                        <Label styleClass="form-label" text="RECENT HISTORY" />
+                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                            <content>
+                                <VBox fx:id="historyVBox" spacing="10.0" />
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,229 @@
+/*
+==============================================================
+  STYLESHEET "VIP ROBUST" - PHIÊN BẢN SỬA LỖI VÀ NÂNG CẤP
+==============================================================
+*/
+
+/* --- STYLE CƠ BẢN CHO TẤT CẢ CÁC NÚT SIDEBAR --- */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #b0c4de;
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: transparent;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 25px;
+    -fx-transition-property: -fx-background-color, -fx-text-fill;
+    -fx-transition-duration: 0.2s;
+    -fx-transition-timing-function: ease-in-out;
+}
+
+/* --- HIỆU ỨNG KHI DI CHUỘT VÀO MỘT NÚT *KHÔNG* ACTIVE --- */
+.sidebar-button:hover:not(.is-active) {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-text-fill: white;
+}
+
+/*
+==============================================================
+  STYLE CHO CÁC NÚT KHI CÓ CLASS "is-active"
+==============================================================
+*/
+
+/* --- Các thuộc tính chung cho TẤT CẢ các nút active --- */
+.sidebar-button.is-active {
+    -fx-text-fill: white;
+    -fx-padding: 0 0 0 20px;
+    -fx-border-width: 0 0 0 5px; /* Chú ý: 5px thay vì 5 */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 15, 0, 0, 5);
+}
+
+/* --- Màu sắc riêng cho từng nút KHI CÓ CLASS "is-active" --- */
+.sidebar-button.is-active.dashboard {
+    -fx-background-color: linear-gradient(to right, rgba(22, 163, 74, 0.4), rgba(22, 163, 74, 0.1));
+    -fx-border-color: transparent transparent transparent #16a34a;
+}
+.sidebar-button.is-active.data-entry {
+    -fx-background-color: linear-gradient(to right, rgba(59, 130, 246, 0.4), rgba(59, 130, 246, 0.1));
+    -fx-border-color: transparent transparent transparent #3b82f6;
+}
+.sidebar-button.is-active.analytics {
+    -fx-background-color: linear-gradient(to right, rgba(139, 92, 246, 0.4), rgba(139, 92, 246, 0.1));
+    -fx-border-color: transparent transparent transparent #8b5cf6;
+}
+.sidebar-button.is-active.goals {
+    -fx-background-color: linear-gradient(to right, rgba(249, 115, 22, 0.4), rgba(249, 115, 22, 0.1));
+    -fx-border-color: transparent transparent transparent #f97316;
+}
+.sidebar-button.is-active.history {
+    -fx-background-color: linear-gradient(to right, rgba(234, 179, 8, 0.4), rgba(234, 179, 8, 0.1));
+    -fx-border-color: transparent transparent transparent #eab308;
+}
+.sidebar-button.is-active.settings {
+    -fx-background-color: linear-gradient(to right, rgba(107, 114, 128, 0.4), rgba(107, 114, 128, 0.1));
+    -fx-border-color: transparent transparent transparent #6b7280;
+}
+
+
+/* --- NÚT LOGOUT (Không thay đổi) --- */
+.logout-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #fca5a5;
+    -fx-font-family: "System";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 0 0 25px;
+    -fx-transition-property: -fx-background-color, -fx-text-fill;
+    -fx-transition-duration: 0.3s;
+    -fx-transition-timing-function: ease-in-out;
+}
+.logout-button:hover {
+    -fx-background-color: rgba(239, 68, 68, 0.2);
+    -fx-text-fill: #ef4444;
+}
+/* --- Global Font and Root Variables --- */
+.root {
+    -fx-font-family: 'Inter', 'Segoe UI', sans-serif;
+    -primary-color: #2563eb; /* Blue for primary actions */
+    -primary-color-hover: #1d4ed8; /* Darker blue for hover */
+    -background-color: #f8fafc; /* Light gray page background */
+    -card-background-color: white;
+    -text-color-primary: #111827; /* Dark gray for main text */
+    -text-color-secondary: #6b7280; /* Lighter gray for subtitles */
+    -border-color: #e5e7eb; /* Light border color */
+    -success-color: #16a34a; /* Green for success messages */
+    -error-color: #ef4444; /* Red for error messages */
+}
+
+/* --- Main Application Background --- */
+.anchor-pane {
+    -fx-background-color: -background-color;
+}
+
+/* --- Sidebar Button Styling (from your main view) --- */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #cbd5e1; /* Light text for dark sidebar */
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 20px; /* Indent text */
+}
+
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+}
+
+/* This is the class that makes the button "glow" when active */
+.sidebar-button.is-active {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+}
+
+.logout-button {
+    -fx-background-color: #475569;
+    -fx-text-fill: #e2e8f0;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 20px;
+}
+
+.logout-button:hover {
+    -fx-background-color: #ef4444; /* Red on hover for logout */
+    -fx-text-fill: white;
+}
+
+
+/* --- Data Entry View Specific Styles --- */
+
+/* Main container for padding */
+.page-container {
+    -fx-padding: 40px;
+}
+
+/* Typography */
+.page-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-fill: -text-color-primary;
+}
+
+.page-subtitle {
+    -fx-font-size: 16px;
+    -fx-fill: -text-color-secondary;
+}
+
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color-secondary;
+}
+
+.unit-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-fill: -text-color-primary;
+}
+
+/* Metric Card Styling */
+.metric-card {
+    -fx-background-color: -card-background-color;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 15, 0, 0, 4);
+    -fx-border-color: -border-color;
+    -fx-border-radius: 12;
+    -fx-border-width: 1px;
+}
+
+/* Modern Text Field */
+.text-input-styled {
+    -fx-font-size: 18px;
+    -fx-background-color: #f9fafb; /* Very light gray background */
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8px 12px;
+}
+
+.text-input-styled:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.2), 10, 0, 0, 0);
+}
+
+/* Primary Action Button */
+.button-primary {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 12px 20px;
+    -fx-cursor: hand;
+}
+
+.button-primary:hover {
+    -fx-background-color: -primary-color-hover;
+}
+
+/* Status Label Styling */
+.status-label-success {
+    -fx-text-fill: -success-color;
+    -fx-font-weight: bold;
+}
+.status-label-error {
+    -fx-text-fill: -error-color;
+    -fx-font-weight: bold;
+}

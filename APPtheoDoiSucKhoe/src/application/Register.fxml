@@ -17,7 +17,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegisterController">
     <children>
         <!-- Left Side - Welcome Panel -->
-        <VBox alignment="CENTER" prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: rgba(255, 255, 255, 0.1);">
+        <VBox alignment="CENTER" prefHeight="700.0" prefWidth="400.0" style="-fx-background-color: rgba(255, 255, 255, 0.1);" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label text="Join Health Tracker Pro" textFill="WHITE">
                     <font>
@@ -71,7 +71,7 @@
         </VBox>
 
         <!-- Right Side - Registration Form -->
-        <ScrollPane layoutX="400.0" prefHeight="700.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background: white;">
+        <ScrollPane fitToWidth="true" layoutX="400.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
                 <VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: white;">
                     <children>

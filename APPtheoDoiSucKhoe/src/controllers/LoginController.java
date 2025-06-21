@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.User;
 import services.UserService;
-
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,16 +44,6 @@ public class LoginController implements Initializable {
             showStatus("Database connection failed. Please restart the application.", false);
         }
 
-        // Auto-fill for testing
-        if (usernameField != null) {
-            usernameField.setText("vule66");
-            System.out.println("✅ Username field auto-filled");
-        }
-        if (passwordField != null) {
-            passwordField.setText("123456");
-            System.out.println("✅ Password field auto-filled");
-        }
-
         // Hide loading indicator initially
         if (loadingIndicator != null) {
             loadingIndicator.setVisible(false);
@@ -72,6 +62,7 @@ public class LoginController implements Initializable {
             usernameField.setOnAction(e -> passwordField.requestFocus());
         }
     }
+
 
     @FXML
     private void handleLogin(ActionEvent event) {
@@ -172,7 +163,14 @@ public class LoginController implements Initializable {
     private void handleSignUp(ActionEvent event) {
         System.out.println("🔗 Sign Up clicked!");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Register.fxml"));
+            // Corrected path to the FXML file
+            URL fxmlLocation = getClass().getResource("/application/Register.fxml");
+            if (fxmlLocation == null) {
+                System.out.println("❌ Critical Error: Cannot find /application/Register.fxml. Check the path.");
+                showStatus("Error: Registration form is missing.", false);
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();
 
             Stage stage = (Stage) signUpLink.getScene().getWindow();
@@ -180,7 +178,7 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Health Tracker Pro - Sign Up");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("❌ Error loading registration page: " + e.getMessage());
             e.printStackTrace();
             showStatus("Failed to load registration page: " + e.getMessage(), false);
@@ -191,7 +189,13 @@ public class LoginController implements Initializable {
     private void handleForgotPassword(ActionEvent event) {
         System.out.println("🔗 Forgot Password clicked!");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/ForgotPassword.fxml"));
+            URL fxmlLocation = getClass().getResource("/application/ForgotPassword.fxml");
+            if (fxmlLocation == null) {
+                System.out.println("❌ Critical Error: Cannot find /application/ForgotPassword.fxml. Check the path.");
+                showStatus("Error: Forgot password form is missing.", false);
+                return;
+            }
+            FXMLLoader loader = new FXMLLoader(fxmlLocation);
             Parent root = loader.load();
 
             Stage stage = (Stage) forgotPasswordLink.getScene().getWindow();
@@ -199,7 +203,7 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Health Tracker Pro - Reset Password");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("❌ Error loading forgot password page: " + e.getMessage());
             e.printStackTrace();
             showStatus("Failed to load forgot password page: " + e.getMessage(), false);
@@ -215,4 +219,5 @@ public class LoginController implements Initializable {
         }
         System.out.println("Status: " + message);
     }
+
 }

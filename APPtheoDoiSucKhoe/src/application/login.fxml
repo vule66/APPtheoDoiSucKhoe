@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to right, #667eea, #764ba2);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
     <children>
         <!-- Left Side - Welcome Panel -->
         <VBox alignment="CENTER" prefHeight="600.0" prefWidth="450.0" style="-fx-background-color: rgba(255, 255, 255, 0.1);">
@@ -31,20 +31,12 @@
                         <Insets top="10.0" />
                     </VBox.margin>
                 </Label>
-                <Label text="Welcome back, vule66!" textFill="#f8f9fa" opacity="0.8">
+                <Label opacity="0.8" text="Welcome back!" textFill="#f8f9fa">
                     <font>
                         <Font size="16.0" />
                     </font>
                     <VBox.margin>
                         <Insets top="20.0" />
-                    </VBox.margin>
-                </Label>
-                <Label text="June 2, 2025 • 14:46" textFill="#f8f9fa" opacity="0.6">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets top="5.0" />
                     </VBox.margin>
                 </Label>
             </children>
