@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="rootPane" styleClass="chat-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ChatController">
+    <children>
+        <VBox spacing="20.0" styleClass="chat-main-content" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <!-- Phần Tiêu đề với gradient header -->
+                <VBox alignment="CENTER" spacing="8.0" styleClass="chat-header">
+                    <children>
+                        <Text fill="#2f2a96" text="💬 Community Chat" textAlignment="CENTER" wrappingWidth="580.0">
+                            <font>
+                                <Font name="System Bold" size="38.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#266bd2" text="Connect and chat with other users in the Health Tracker community." textAlignment="CENTER" wrappingWidth="520.0">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0" />
+                    </VBox.margin>
+                </VBox>
+
+                <!-- Khu vực chat với thiết kế hiện đại -->
+                <SplitPane dividerPositions="0.72" styleClass="chat-split-pane" VBox.vgrow="ALWAYS">
+                    <items>
+                        <!-- Khu vực chat chính -->
+                        <VBox spacing="15.0" styleClass="chat-main-area">
+                            <children>
+                                <TextArea fx:id="chatArea" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="chat-text-area" VBox.vgrow="ALWAYS">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </TextArea>
+                                <!-- Input area với thiết kế hiện đại -->
+                                <HBox alignment="CENTER" spacing="12.0" styleClass="chat-input-container">
+                                    <children>
+                                        <TextField fx:id="messageField" onAction="#sendMessage" prefHeight="48.0" promptText="Enter your message..." styleClass="chat-input-field" HBox.hgrow="ALWAYS">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </TextField>
+                                        <Button mnemonicParsing="false" onAction="#sendMessage" prefHeight="48.0" prefWidth="110.0" stylesheets="@styles.css" text="📤 Send" textFill="#232962">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                 <styleClass>
+                                    <String fx:value="chat-send-button" />
+                                    <String fx:value="button-primary" />
+                                 </styleClass>
+                                        </Button>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <!-- Sidebar người dùng online -->
+                        <VBox spacing="12.0" styleClass="chat-sidebar">
+                            <children>
+                                <VBox styleClass="online-users-header">
+                                    <children>
+                                        <Label styleClass="online-users-title" text="🟢 ONLINE USERS">
+                                            <font>
+                                                <Font name="System Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets bottom="8.0" left="5.0" right="5.0" top="5.0" />
+                                    </VBox.margin>
+                                </VBox>
+                                <ListView fx:id="userListView" styleClass="online-users-list" VBox.vgrow="ALWAYS" />
+                            </children>
+                            <padding>
+                                <Insets left="15.0" right="10.0" />
+                            </padding>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

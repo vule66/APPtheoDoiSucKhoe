@@ -123,7 +123,16 @@ public class LoginController implements Initializable {
                 showStatus("Login failed. Please try again.", false);
             }
         };
-
+        try {
+            // Tìm các instance ChatClient đang chạy và đóng chúng
+            for (Thread t : Thread.getAllStackTraces().keySet()) {
+                if (t.getName().contains("ChatClient")) {
+                    t.interrupt();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("⚠️ Lỗi khi dọn dẹp các kết nối cũ: " + e.getMessage());
+        }
         Thread authThread = new Thread(authTask);
         authThread.setDaemon(true);
         authThread.start();

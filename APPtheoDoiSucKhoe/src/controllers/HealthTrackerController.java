@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -26,16 +27,26 @@ import java.util.ResourceBundle;
 public class HealthTrackerController implements Initializable {
 
 
-    @FXML private StackPane mainContentPane;
-    @FXML private Label userNameLabel;
-    @FXML private Label userInitialsLabel;
-    @FXML private Label dateTimeLabel;
-    @FXML private Button dashboardBtn;
-    @FXML private Button dataEntryBtn;
-    @FXML private Button analyticsBtn;
-    @FXML private Button goalsBtn;
-    @FXML private Button historyBtn;
-    @FXML private Button logoutBtn;
+    @FXML
+    private StackPane mainContentPane;
+    @FXML
+    private Label userNameLabel;
+    @FXML
+    private Label userInitialsLabel;
+    @FXML
+    private Label dateTimeLabel;
+    @FXML
+    private Button dashboardBtn;
+    @FXML
+    private Button dataEntryBtn;
+    @FXML
+    private Button analyticsBtn;
+    @FXML
+    private Button goalsBtn;
+    @FXML
+    private Button chatBtn;
+    @FXML
+    private Button logoutBtn;
     private Button currentActiveButton;
     private User currentUser;
     private Timeline clockTimeline;
@@ -55,6 +66,51 @@ public class HealthTrackerController implements Initializable {
         }
     }
 
+    // Thêm biến thành viên để lưu trữ controller hiện tại
+    private ChatController currentChatController;
+
+    @FXML
+    public void openCommunityChat() {
+        try {
+            // Nếu đã có controller chat và vẫn kết nối, sử dụng lại
+            if (currentChatController != null) {
+                Node chatView = currentChatController.getRoot();
+                mainContentPane.getChildren().setAll(chatView);
+                updateActiveButton(chatBtn);
+                return;
+            }
+
+            // Nếu chưa có controller chat, tạo mới
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/ChatView.fxml"));
+            Node chatView = loader.load();
+
+            ChatController chatController = loader.getController();
+            this.currentChatController = chatController;
+
+            // Truyền tên người dùng hiện tại vào controller chat
+            if (currentUser != null) {
+                String username = currentUser.getUsername();
+                chatController.initializeChat(username);
+
+                // Đặt giao diện chat vào mainContentPane
+                mainContentPane.getChildren().setAll(chatView);
+
+                // Cập nhật trạng thái nút menu
+                updateActiveButton(chatBtn);
+            } else {
+                throw new IllegalStateException("Người dùng chưa đăng nhập");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Hiển thị thông báo lỗi
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Không thể mở chat cộng đồng");
+            alert.setContentText("Đã xảy ra lỗi: " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
     @FXML
     private void handleMenuClick(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
@@ -67,7 +123,6 @@ public class HealthTrackerController implements Initializable {
         if (clickedButton == dashboardBtn) {
             fxmlFileToLoad = "/application/DashboardView.fxml";
         } else if (clickedButton == dataEntryBtn) {
-
             fxmlFileToLoad = "/application/DataEntryView.fxml";
         } else if (clickedButton == analyticsBtn) {
             fxmlFileToLoad = "/application/AnalyticsView.fxml";
@@ -83,6 +138,7 @@ public class HealthTrackerController implements Initializable {
             updateActiveButton(clickedButton);
         }
     }
+
 
     private void loadView(String fxmlPath) {
         if (currentUser == null) {
@@ -105,17 +161,13 @@ public class HealthTrackerController implements Initializable {
                 ((DashboardController) controller).setCurrentUser(this.currentUser);
             } else if (controller instanceof DataEntryController) {
                 ((DataEntryController) controller).setCurrentUser(this.currentUser);
-            }
-            else if (controller instanceof AnalyticsController) {
+            } else if (controller instanceof AnalyticsController) {
                 ((AnalyticsController) controller).setCurrentUser(this.currentUser);
-            }
-            else if (controller instanceof GoalsController) {
+            } else if (controller instanceof GoalsController) {
                 ((GoalsController) controller).setCurrentUser(this.currentUser);
-            }
-            else if (controller instanceof GoalDialogController) {
+            } else if (controller instanceof GoalDialogController) {
                 ((GoalDialogController) controller).setCurrentUser(this.currentUser);
             }
-
             mainContentPane.getChildren().setAll(view);
 
         } catch (IOException e) {
@@ -160,7 +212,18 @@ public class HealthTrackerController implements Initializable {
     }
 
     @FXML
-    private void handleLogout(ActionEvent event) {
+    private void handleLogout() {
+        // Ngắt kết nối chat nếu đang ở màn hình chat
+        if (currentChatController != null) {
+            currentChatController.disconnectChat();
+            currentChatController = null;
+        }
+
+        // Dừng timeline đồng hồ
+        if (clockTimeline != null) {
+            clockTimeline.stop();
+        }
+
         try {
             if (clockTimeline != null) clockTimeline.stop();
             Stage stage = (Stage) logoutBtn.getScene().getWindow();
@@ -177,4 +240,5 @@ public class HealthTrackerController implements Initializable {
             System.err.println("Error loading login view: " + e.getMessage());
         }
     }
+
 }

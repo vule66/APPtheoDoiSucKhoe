@@ -62,6 +62,12 @@
                                 <String fx:value="goals" />
                             </styleClass>
                         </Button>
+                        <Button fx:id="chatBtn" onAction="#openCommunityChat" alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="280.0" text="💬  Community Chat">
+                            <styleClass>
+                                <String fx:value="sidebar-button" />
+                                <String fx:value="chat" />
+                            </styleClass>
+                        </Button>
                     </children>
                 </VBox>
                 <Region VBox.vgrow="ALWAYS" />

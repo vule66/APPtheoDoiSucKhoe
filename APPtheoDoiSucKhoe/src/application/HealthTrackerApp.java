@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+
 public class HealthTrackerApp extends Application {
 
     @Override
@@ -62,7 +66,43 @@ public class HealthTrackerApp extends Application {
     }
 
     public static void main(String[] args) {
+        // Thử kết nối đến máy chủ trước khi khởi động một máy chủ mới
+        boolean serverRunning = isServerRunning("localhost", 9876);
 
+        if (!serverRunning) {
+            // Chỉ khởi động máy chủ nếu chưa có máy chủ nào đang chạy
+            Thread serverThread = new Thread(() -> {
+                try {
+                    System.out.println("Khởi động máy chủ chat mới...");
+                    server.ChatServer.main(new String[]{});
+                } catch (Exception e) {
+                    System.out.println("Lỗi khởi động máy chủ chat: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            });
+            serverThread.setDaemon(true);
+            serverThread.start();
+
+            try {
+                Thread.sleep(1000); // Đợi máy chủ khởi động
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Đã phát hiện máy chủ chat đang chạy, sẽ kết nối đến máy chủ hiện có");
+        }
+
+        // Khởi động ứng dụng JavaFX
         launch(args);
+    }
+
+    // Phương thức kiểm tra xem máy chủ đã chạy chưa
+    private static boolean isServerRunning(String host, int port) {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(host, port), 1000);
+            return true;
+        } catch (IOException e) {
+            return false; // Không thể kết nối = máy chủ chưa chạy
+        }
     }
 }
