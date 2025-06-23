@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="controllers.HealthTrackerController" style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane  fx:controller="controllers.HealthTrackerController" style="-fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <String fx:value="/application/styles.css" />
     </stylesheets>
@@ -60,12 +60,6 @@
                             <styleClass>
                                 <String fx:value="sidebar-button" />
                                 <String fx:value="goals" />
-                            </styleClass>
-                        </Button>
-                        <Button fx:id="historyBtn" onAction="#handleMenuClick" alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="280.0" text="📚  History">
-                            <styleClass>
-                                <String fx:value="sidebar-button" />
-                                <String fx:value="history" />
                             </styleClass>
                         </Button>
                     </children>

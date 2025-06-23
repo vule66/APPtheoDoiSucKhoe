@@ -4,13 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-/**
- * Model đại diện cho một mục tiêu sức khỏe của người dùng
- * Tương ứng với bảng 'user_goals' trong database
- */
 public class Goal {
 
-    // Enum cho các loại mục tiêu
     public enum GoalType {
         WEIGHT_LOSS("Weight Loss", "kg"),
         WEIGHT_GAIN("Weight Gain", "kg"),
@@ -118,10 +113,6 @@ public class Goal {
         }
     }
 
-    /**
-     * Tính phần trăm hoàn thành mục tiêu
-     * @return giá trị từ 0.0 đến 1.0
-     */
     public double getProgressPercentage() {
         if (targetValue == null || targetValue == 0) return 0.0;
 
@@ -138,32 +129,21 @@ public class Goal {
         return Math.min(progress, 1.0);
     }
 
-    /**
-     * Tính số ngày còn lại để đạt mục tiêu
-     */
     public long getDaysRemaining() {
         if (targetDate == null) return 0;
         return ChronoUnit.DAYS.between(LocalDate.now(), targetDate);
     }
 
-    /**
-     * Tính tổng số ngày của mục tiêu
-     */
+
     public long getTotalDays() {
         if (startDate == null || targetDate == null) return 0;
         return ChronoUnit.DAYS.between(startDate, targetDate);
     }
 
-    /**
-     * Kiểm tra mục tiêu có quá hạn không
-     */
     public boolean isOverdue() {
         return !isAchieved && targetDate != null && LocalDate.now().isAfter(targetDate);
     }
 
-    /**
-     * Lấy trạng thái của mục tiêu
-     */
     public String getStatus() {
         if (isAchieved) return "Completed";
         if (isOverdue()) return "Overdue";
@@ -171,9 +151,6 @@ public class Goal {
         return "In Progress";
     }
 
-    /**
-     * Cập nhật tiến độ và kiểm tra xem đã đạt mục tiêu chưa
-     */
     public void updateProgress(Double newValue) {
         this.currentValue = newValue;
 

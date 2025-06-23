@@ -1,7 +1,6 @@
 package database;
 
 import java.sql.*;
-import java.util.UUID;
 
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:health_tracker.db";
@@ -29,7 +28,6 @@ public class DatabaseManager {
             checkAndMigrate();
             createTables();
             createIndexes();
-            insertSampleData();
             System.out.println("✅ Enhanced Database initialized successfully!");
 
         } catch (Exception e) {
@@ -213,7 +211,6 @@ public class DatabaseManager {
                 )
             """;
 
-            // Execute all table creation statements
             stmt.execute(createUsersTable);
             stmt.execute(createHealthDataTable);
             stmt.execute(createExerciseTable);
@@ -222,7 +219,6 @@ public class DatabaseManager {
             stmt.execute(createUserAchievementsTable);
             stmt.execute(createPasswordResetTable);
 
-            // Add new columns to existing users table if they don't exist
             addColumnIfNotExists("users", "weight", "REAL");
             addColumnIfNotExists("users", "activity_level", "VARCHAR(20) DEFAULT 'Moderate'");
             addColumnIfNotExists("users", "daily_calorie_goal", "INTEGER DEFAULT 2000");
@@ -264,7 +260,6 @@ public class DatabaseManager {
         try {
             Statement stmt = connection.createStatement();
 
-            // Indexes for better performance - check if columns exist first
             String[] indexes = {
                     "CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)",
                     "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)",
@@ -292,140 +287,6 @@ public class DatabaseManager {
         }
     }
 
-    private void insertSampleData() {
-        try {
-            insertDefaultUser();
-            insertSampleAchievements();
-            insertSampleGoals();
-            System.out.println("✅ Sample data inserted successfully!");
-
-        } catch (Exception e) {
-            System.out.println("❌ Error inserting sample data: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void insertDefaultUser() {
-        try {
-            String checkUser = "SELECT COUNT(*) FROM users WHERE username = ?";
-            PreparedStatement checkStmt = connection.prepareStatement(checkUser);
-            checkStmt.setString(1, "vule66");
-            ResultSet rs = checkStmt.executeQuery();
-            rs.next();
-
-            if (rs.getInt(1) == 0) {
-                String insertUser = """
-                    INSERT INTO users (username, email, password, full_name, age, gender, height, weight, 
-                                     activity_level, daily_calorie_goal, daily_water_goal, daily_step_goal) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """;
-                PreparedStatement stmt = connection.prepareStatement(insertUser);
-                stmt.setString(1, "vule66");
-                stmt.setString(2, "vule66@example.com");
-                stmt.setString(3, hashPassword("123456"));
-                stmt.setString(4, "Vu Le");
-                stmt.setInt(5, 25);
-                stmt.setString(6, "Male");
-                stmt.setDouble(7, 175.0);
-                stmt.setDouble(8, 70.0);
-                stmt.setString(9, "Active");
-                stmt.setInt(10, 2500);
-                stmt.setDouble(11, 3.0);
-                stmt.setInt(12, 12000);
-                stmt.executeUpdate();
-                stmt.close();
-                System.out.println("✅ Enhanced default user created: vule66/123456");
-            } else {
-                System.out.println("ℹ️ Default user already exists");
-            }
-
-            checkStmt.close();
-            rs.close();
-
-        } catch (SQLException e) {
-            System.out.println("❌ Error inserting default user: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void insertSampleAchievements() {
-        try {
-            String checkAchievements = "SELECT COUNT(*) FROM achievements";
-            PreparedStatement checkStmt = connection.prepareStatement(checkAchievements);
-            ResultSet rs = checkStmt.executeQuery();
-            rs.next();
-
-            if (rs.getInt(1) == 0) {
-                String insertAchievement = """
-                    INSERT INTO achievements (achievement_name, description, achievement_type, criteria_value, criteria_unit, points_reward) 
-                    VALUES (?, ?, ?, ?, ?, ?)
-                """;
-
-                PreparedStatement stmt = connection.prepareStatement(insertAchievement);
-
-                // Steps achievements
-                stmt.setString(1, "First Steps"); stmt.setString(2, "Take your first 1000 steps");
-                stmt.setString(3, "Steps"); stmt.setDouble(4, 1000); stmt.setString(5, "steps"); stmt.setInt(6, 50);
-                stmt.executeUpdate();
-
-                stmt.setString(1, "Daily Walker"); stmt.setString(2, "Reach 10,000 steps in a day");
-                stmt.setString(3, "Steps"); stmt.setDouble(4, 10000); stmt.setString(5, "steps"); stmt.setInt(6, 100);
-                stmt.executeUpdate();
-
-                stmt.setString(1, "Marathon Walker"); stmt.setString(2, "Reach 25,000 steps in a day");
-                stmt.setString(3, "Steps"); stmt.setDouble(4, 25000); stmt.setString(5, "steps"); stmt.setInt(6, 200);
-                stmt.executeUpdate();
-
-                stmt.close();
-                System.out.println("✅ Sample achievements inserted");
-            }
-
-            checkStmt.close();
-            rs.close();
-
-        } catch (SQLException e) {
-            System.out.println("❌ Error inserting achievements: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void insertSampleGoals() {
-        try {
-            String checkGoals = "SELECT COUNT(*) FROM user_goals WHERE user_id = 1";
-            PreparedStatement checkStmt = connection.prepareStatement(checkGoals);
-            ResultSet rs = checkStmt.executeQuery();
-            rs.next();
-
-            if (rs.getInt(1) == 0) {
-                String insertGoal = """
-                    INSERT INTO user_goals (user_id, goal_type, goal_description, target_value, target_unit, start_date, target_date, priority_level) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                """;
-
-                PreparedStatement stmt = connection.prepareStatement(insertGoal);
-
-                stmt.setInt(1, 1);
-                stmt.setString(2, "Weight Loss");
-                stmt.setString(3, "Lose 5kg in 3 months through healthy diet and exercise");
-                stmt.setDouble(4, 65.0);
-                stmt.setString(5, "kg");
-                stmt.setString(6, "2025-06-20");
-                stmt.setString(7, "2025-09-20");
-                stmt.setString(8, "High");
-                stmt.executeUpdate();
-
-                stmt.close();
-                System.out.println("✅ Sample goals inserted for default user");
-            }
-
-            checkStmt.close();
-            rs.close();
-
-        } catch (SQLException e) {
-            System.out.println("❌ Error inserting sample goals: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 
     private String hashPassword(String password) {
         return "hash_" + password;

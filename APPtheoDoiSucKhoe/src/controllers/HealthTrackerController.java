@@ -73,8 +73,6 @@ public class HealthTrackerController implements Initializable {
             fxmlFileToLoad = "/application/AnalyticsView.fxml";
         } else if (clickedButton == goalsBtn) {
             fxmlFileToLoad = "/application/GoalsView.fxml";
-        } else if (clickedButton == historyBtn) {
-            fxmlFileToLoad = "/application/HistoryView.fxml";
         }
 
         if (!fxmlFileToLoad.isEmpty()) {

@@ -2,10 +2,6 @@ package models;
 
 import java.time.LocalDate;
 
-/**
- * Model này đại diện cho một dòng trong bảng 'health_data' của bạn.
- * Các trường đã được cập nhật để khớp chính xác với database.
- */
 public class HealthEntry {
 
     private int entryId;

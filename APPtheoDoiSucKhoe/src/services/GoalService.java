@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Service class để xử lý tất cả các thao tác liên quan đến Goals
- */
 public class GoalService {
 
     private Connection connection;
@@ -24,9 +21,6 @@ public class GoalService {
         this.healthDataService = new HealthDataService();
     }
 
-    /**
-     * Tạo mục tiêu mới
-     */
     public boolean createGoal(Goal goal) {
         String sql = """
         INSERT INTO user_goals (user_id, goal_type, goal_description, target_value, target_unit, 
@@ -312,9 +306,6 @@ public class GoalService {
         return new GoalStatistics(0, 0, 0, 0);
     }
 
-    /**
-     * Map ResultSet to Goal object
-     */
     private Goal mapResultSetToGoal(ResultSet rs) throws SQLException {
         LocalDateTime createdAt = null;
         LocalDateTime achievedAt = null;
@@ -346,9 +337,6 @@ public class GoalService {
         );
     }
 
-    /**
-     * Inner class for goal statistics
-     */
     public static class GoalStatistics {
         private final int totalGoals;
         private final int completedGoals;

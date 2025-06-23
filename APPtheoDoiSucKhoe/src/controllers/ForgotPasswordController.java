@@ -46,7 +46,7 @@ public class ForgotPasswordController implements Initializable {
 
         // Auto-fill for testing
         if (emailField != null) {
-            emailField.setText("vule66@example.com");
+            emailField.setText("");
             System.out.println("✅ Email field auto-filled for testing");
         }
 

@@ -14,8 +14,6 @@ import javafx.scene.text.Text;
 import models.HealthEntry;
 import models.User;
 import services.HealthEntryService;
-import services.HealthDataService;
-import services.UserService;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -25,7 +23,6 @@ import java.util.DoubleSummaryStatistics;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class AnalyticsController implements Initializable {
 

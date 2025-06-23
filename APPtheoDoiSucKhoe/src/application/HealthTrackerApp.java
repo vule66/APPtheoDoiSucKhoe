@@ -14,10 +14,10 @@ public class HealthTrackerApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            System.out.println("🚀 Starting Health Tracker Application...");
+            System.out.println("Starting Health Tracker Application...");
 
             DatabaseManager.getInstance();
-            System.out.println("✅ Database initialized successfully!");
+            System.out.println("Database initialized successfully!");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Parent root = loader.load();
@@ -27,7 +27,7 @@ public class HealthTrackerApp extends Application {
             try {
                 primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/app-icon.png")));
             } catch (Exception e) {
-                System.out.println("ℹ️ App icon not found, using default");
+                System.out.println("App icon not found, using default");
             }
 
             primaryStage.setTitle("Health Tracker Pro - Login");
@@ -37,7 +37,7 @@ public class HealthTrackerApp extends Application {
             primaryStage.show();
 
         } catch(Exception e) {
-            System.out.println("❌ Error starting application: " + e.getMessage());
+            System.out.println("Error starting application: " + e.getMessage());
             e.printStackTrace();
 
             Platform.runLater(() -> {
@@ -55,9 +55,9 @@ public class HealthTrackerApp extends Application {
     public void stop() {
         try {
             DatabaseManager.getInstance().closeConnection();
-            System.out.println("✅ Application closed and database disconnected.");
+            System.out.println("Application closed and database disconnected.");
         } catch (Exception e) {
-            System.out.println("❌ Error during application shutdown: " + e.getMessage());
+            System.out.println("Error during application shutdown: " + e.getMessage());
         }
     }
 

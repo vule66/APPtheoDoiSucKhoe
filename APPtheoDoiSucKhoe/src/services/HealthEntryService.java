@@ -9,17 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Service này đã được viết lại để tương tác chính xác với bảng 'health_data'.
- */
 public class HealthEntryService {
-
-    private Connection getConnection() throws SQLException {
-        return DatabaseManager.getInstance().getConnection();
-    }
 
     public void saveOrUpdateEntry(HealthEntry entry) throws SQLException {
         Connection conn = DatabaseManager.getInstance().getConnection();

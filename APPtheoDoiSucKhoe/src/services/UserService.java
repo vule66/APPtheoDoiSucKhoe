@@ -18,7 +18,6 @@ public class UserService {
         this.connection = DatabaseManager.getInstance().getConnection();
     }
 
-    // <<< PHƯƠNG THỨC HỖ TRỢ ĐỂ TRÁNH LẶP CODE >>>
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
@@ -58,7 +57,6 @@ public class UserService {
         return null;
     }
 
-    // <<< PHƯƠNG THỨC ĐƯỢC BỔ SUNG ĐỂ SỬA LỖI >>>
     public Optional<User> findUserById(int id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -78,7 +76,6 @@ public class UserService {
         try {
             System.out.println("📝 Registering user: " + user.getUsername());
 
-            // Hash the password with BCrypt
             String hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 
             String sql = """

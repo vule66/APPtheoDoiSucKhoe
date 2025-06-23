@@ -5,8 +5,6 @@ import models.HealthData;
 import models.User;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class HealthDataService {
@@ -23,7 +21,7 @@ public class HealthDataService {
         if (user == null) return new HealthData();
 
         try {
-            String sql = "SELECT * FROM health_data WHERE user_id = ? AND date = ?";
+            String sql = "SELECT * FROM health_data WHERE user_id = ? AND record_date = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, user.getId());
             stmt.setString(2, LocalDate.now().toString());
@@ -33,7 +31,7 @@ public class HealthDataService {
             if (rs.next()) {
                 HealthData data = new HealthData();
                 data.setUserId(String.valueOf(user.getId()));
-                data.setDate(LocalDate.parse(rs.getString("date")));
+                data.setDate(LocalDate.parse(rs.getString("record_date")));
                 data.setSteps(rs.getInt("steps"));
                 data.setHeartRate(rs.getInt("heart_rate"));
                 data.setCalories(rs.getInt("calories"));

@@ -1,238 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<VBox spacing="25.0" styleClass="goal-dialog-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GoalDialogController">
-    <stylesheets>
-        <String fx:value="/application/styles.css" />
-    </stylesheets>
+<VBox prefWidth="600.0" spacing="20" styleClass="goal-dialog-container" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GoalDialogController">
+
     <padding>
-        <Insets bottom="35.0" left="35.0" right="35.0" top="35.0" />
+        <Insets bottom="30" left="30" right="30" top="30" />
     </padding>
+
     <children>
-        <!-- Enhanced Header with Gradient Background -->
-        <VBox spacing="15.0" styleClass="goal-dialog-header">
-            <padding>
-                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-            </padding>
+
+        <!-- Header -->
+        <VBox spacing="10" styleClass="goal-dialog-header">
             <children>
-                <Label fx:id="titleLabel" text="🎯 Add New Goal" styleClass="goal-dialog-title">
+                <Label fx:id="titleLabel" styleClass="goal-dialog-title" text="🎯 Add New Goal">
                     <font>
-                        <Font name="System Bold" size="28.0" />
+                        <Font name="System Bold" size="28" />
                     </font>
                 </Label>
-                <Label text="Set up your health objective with specific targets and timeline" styleClass="goal-dialog-subtitle">
+                <Label styleClass="goal-dialog-subtitle" text="Set up your health objective with specific targets and timeline">
                     <font>
-                        <Font size="15.0" />
+                        <Font size="14" />
                     </font>
                 </Label>
             </children>
         </VBox>
 
-        <!-- Enhanced Form Container -->
-        <VBox spacing="25.0" styleClass="goal-dialog-form">
-            <padding>
-                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-            </padding>
-            <children>
-                <!-- Goal Type with Enhanced Styling -->
-                <VBox spacing="12.0">
+        <!-- Scrollable content to prevent overflow -->
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox alignment="TOP_CENTER" prefHeight="557.0" prefWidth="452.0" spacing="20" styleClass="goal-dialog-form">
                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <children>
-                                <Label text="🎯" styleClass="form-icon">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Goal Type" styleClass="form-label">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <ComboBox fx:id="goalTypeCombo" prefWidth="400.0" promptText="Select your goal type..." styleClass="form-combo-box">
-                        </ComboBox>
-                    </children>
-                </VBox>
 
-                <!-- Decorative Separator -->
-                <Line endX="330.0" strokeWidth="1.0" styleClass="form-separator" />
-
-                <!-- Description -->
-                <VBox spacing="12.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <!-- Goal Type -->
+                        <VBox spacing="8">
                             <children>
-                                <Label text="📝" styleClass="form-icon">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Description" styleClass="form-label">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <TextArea fx:id="descriptionField" prefHeight="90.0" prefWidth="400.0" promptText="Describe your goal in detail..." wrapText="true" styleClass="form-text-area" />
-                    </children>
-                </VBox>
-
-                <!-- Target Value and Unit with Enhanced Layout -->
-                <VBox spacing="12.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <children>
-                                <Label text="🎲" styleClass="form-icon">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Target &amp; Unit" styleClass="form-label">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <HBox spacing="15.0">
-                            <children>
-                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <HBox alignment="CENTER_LEFT" spacing="10">
                                     <children>
-                                        <Label text="Target Value" styleClass="form-sub-label">
-                                            <font>
-                                                <Font size="13.0" />
-                                            </font>
+                                        <Label styleClass="form-icon" text="🎯" />
+                                        <Label styleClass="form-label" text="Goal Type">
+                                            <font><Font name="System Bold" size="15" /></font>
                                         </Label>
-                                        <TextField fx:id="targetValueField" promptText="Enter target value..." styleClass="text-input-styled" />
                                     </children>
-                                </VBox>
-                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                </HBox>
+                                <ComboBox fx:id="goalTypeCombo" prefWidth="400" promptText="Select your goal type..." styleClass="form-combo-box" />
+                            </children>
+                        </VBox>
+
+                        <Line endX="400" />
+
+                        <!-- Description -->
+                        <VBox spacing="8">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10">
                                     <children>
-                                        <Label text="Unit" styleClass="form-sub-label">
-                                            <font>
-                                                <Font size="13.0" />
-                                            </font>
+                                        <Label styleClass="form-icon" text="📝" />
+                                        <Label styleClass="form-label" text="Description">
+                                            <font><Font name="System Bold" size="15" /></font>
                                         </Label>
-                                        <TextField fx:id="targetUnitField" promptText="kg, steps, L..." styleClass="text-input-styled" />
                                     </children>
-                                </VBox>
+                                </HBox>
+                                <TextArea fx:id="descriptionField" prefHeight="90" prefWidth="470.0" promptText="Describe your goal..." styleClass="form-text-area" wrapText="true" />
                             </children>
-                        </HBox>
-                    </children>
-                </VBox>
+                        </VBox>
 
-                <!-- Current Value -->
-                <VBox spacing="12.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <!-- Target & Unit -->
+                        <VBox spacing="8">
                             <children>
-                                <Label text="📊" styleClass="form-icon">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Current Progress" styleClass="form-label">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <TextField fx:id="currentValueField" promptText="Enter current progress..." styleClass="text-input-styled" />
-                    </children>
-                </VBox>
-
-                <!-- Dates with Enhanced Styling -->
-                <VBox spacing="12.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <children>
-                                <Label text="📅" styleClass="form-icon">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Timeline" styleClass="form-label">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-                        <HBox spacing="15.0">
-                            <children>
-                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <HBox alignment="CENTER_LEFT" spacing="10">
                                     <children>
-                                        <Label text="Start Date" styleClass="form-sub-label">
-                                            <font>
-                                                <Font size="13.0" />
-                                            </font>
+                                        <Label styleClass="form-icon" text="🎲" />
+                                        <Label styleClass="form-label" text="Target &amp; Unit">
+                                            <font><Font name="System Bold" size="15" /></font>
                                         </Label>
-                                        <DatePicker fx:id="startDatePicker" prefWidth="180.0" styleClass="form-date-picker" />
                                     </children>
-                                </VBox>
-                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                </HBox>
+                                <HBox spacing="15">
                                     <children>
-                                        <Label text="Target Date" styleClass="form-sub-label">
-                                            <font>
-                                                <Font size="13.0" />
-                                            </font>
-                                        </Label>
-                                        <DatePicker fx:id="targetDatePicker" prefWidth="180.0" styleClass="form-date-picker" />
+                                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="form-sub-label" text="Target Value" />
+                                                <TextField fx:id="targetValueField" promptText="Enter target value..." styleClass="text-input-styled" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="form-sub-label" text="Unit" />
+                                                <TextField fx:id="targetUnitField" promptText="kg, steps, L..." styleClass="text-input-styled" />
+                                            </children>
+                                        </VBox>
                                     </children>
-                                </VBox>
+                                </HBox>
                             </children>
-                        </HBox>
-                    </children>
-                </VBox>
+                        </VBox>
 
-                <!-- Priority with Enhanced Design -->
-                <VBox spacing="12.0">
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <!-- Current Progress -->
+                        <VBox spacing="8">
                             <children>
-                                <Label text="⭐" styleClass="form-icon">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Priority Level" styleClass="form-label">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                </Label>
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                        <Label styleClass="form-icon" text="📊" />
+                                        <Label styleClass="form-label" text="Current Progress">
+                                            <font><Font name="System Bold" size="15" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <TextField fx:id="currentValueField" promptText="Enter current value..." styleClass="text-input-styled" />
                             </children>
-                        </HBox>
-                        <ComboBox fx:id="priorityCombo" prefWidth="400.0" promptText="Select priority level..." styleClass="form-combo-box">
-                        </ComboBox>
-                    </children>
-                </VBox>
-            </children>
-        </VBox>
+                        </VBox>
 
-        <!-- Enhanced Action Buttons -->
-        <HBox spacing="15.0" alignment="CENTER_RIGHT">
-            <children>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="cancelBtn" text="✕ Cancel" minWidth="110.0" prefHeight="45.0" styleClass="secondary-button"/>
-                <Button fx:id="saveBtn" text="💾 Save Goal" minWidth="130.0" prefHeight="45.0" styleClass="primary-button"/>
-            </children>
-        </HBox>
+                        <!-- Timeline -->
+                        <VBox spacing="8">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                        <Label styleClass="form-icon" text="📅" />
+                                        <Label styleClass="form-label" text="Timeline">
+                                            <font><Font name="System Bold" size="15" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox spacing="15">
+                                    <children>
+                                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="form-sub-label" text="Start Date" />
+                                                <DatePicker fx:id="startDatePicker" prefWidth="180" styleClass="form-date-picker" />
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                            <children>
+                                                <Label styleClass="form-sub-label" text="Target Date" />
+                                                <DatePicker fx:id="targetDatePicker" prefWidth="180" styleClass="form-date-picker" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <!-- Priority -->
+                        <VBox spacing="8">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                        <Label styleClass="form-icon" text="⭐" />
+                                        <Label styleClass="form-label" text="Priority Level">
+                                            <font><Font name="System Bold" size="15" /></font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <ComboBox fx:id="priorityCombo" prefWidth="400" promptText="Select priority..." styleClass="form-combo-box" />
+                  
+                          <!-- Action Buttons -->
+                          <HBox alignment="CENTER_RIGHT" spacing="15">
+                              <children>
+                                  <Region HBox.hgrow="ALWAYS" />
+                                  <Button fx:id="cancelBtn" minWidth="110" prefHeight="40" styleClass="secondary-button" text="✕ Cancel" />
+                                  <Button fx:id="saveBtn" minWidth="130" prefHeight="40" styleClass="primary-button" text="💾 Save Goal" />
+                              </children>
+                          </HBox>
+                            </children>
+                        </VBox>
+
+                    </children>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+                </VBox>
+            </content>
+        </ScrollPane>
+
     </children>
 </VBox>
