@@ -136,9 +136,9 @@ public class GoalsController implements Initializable {
             @Override
             public TableCell<Goal, String> call(TableColumn<Goal, String> param) {
                 return new TableCell<Goal, String>() {
-                    private final Button editBtn = new Button("✏️");
-                    private final Button deleteBtn = new Button("🗑️");
-                    private final Button updateBtn = new Button("📊");
+                    private final Button editBtn = new Button("");
+                    private final Button deleteBtn = new Button("");
+                    private final Button updateBtn = new Button("");
                     private final HBox buttonsBox = new HBox(5);
 
                     {
@@ -278,7 +278,7 @@ public class GoalsController implements Initializable {
                     updateStatistics();
 
                     if (goal.isAchieved()) {
-                        showSuccessAlert("🎉 Congratulations! Goal achieved: " + goal.getGoalDescription());
+                        showSuccessAlert("Congratulations! Goal achieved: " + goal.getGoalDescription());
                     } else {
                         showSuccessAlert("Progress updated successfully!");
                     }

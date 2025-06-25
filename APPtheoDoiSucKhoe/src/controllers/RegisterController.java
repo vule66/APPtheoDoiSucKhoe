@@ -37,20 +37,20 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("✅ RegisterController initialized!");
+        System.out.println("RegisterController initialized!");
 
         try {
             userService = new UserService();
-            System.out.println("✅ UserService created for registration");
+            System.out.println("UserService created for registration");
         } catch (Exception e) {
-            System.out.println("❌ Error creating UserService: " + e.getMessage());
+            System.out.println("Error creating UserService: " + e.getMessage());
             e.printStackTrace();
         }
 
         // Setup gender combo
         if (genderCombo != null) {
             genderCombo.getItems().addAll("Male", "Female", "Other");
-            System.out.println("✅ Gender combo populated");
+            System.out.println("Gender combo populated");
         }
 
         // Hide loading indicator
@@ -154,7 +154,7 @@ public class RegisterController implements Initializable {
                 }
 
                 if (getValue()) {
-                    System.out.println("✅ Registration successful!");
+                    System.out.println("Registration successful!");
                     showStatus("Account created successfully! Redirecting to login...", true);
 
                     // Redirect to login after 2 seconds
@@ -176,7 +176,7 @@ public class RegisterController implements Initializable {
                     redirectThread.start();
 
                 } else {
-                    System.out.println("❌ Registration failed");
+                    System.out.println("Registration failed");
                     showStatus("Registration failed. Username or email may already exist.", false);
                 }
             }
@@ -187,7 +187,7 @@ public class RegisterController implements Initializable {
                 if (loadingIndicator != null) {
                     loadingIndicator.setVisible(false);
                 }
-                System.out.println("❌ Registration task failed: " + getException().getMessage());
+                System.out.println("Registration task failed: " + getException().getMessage());
                 showStatus("Registration failed. Please try again.", false);
             }
         };
@@ -330,7 +330,7 @@ public class RegisterController implements Initializable {
             stage.setTitle("Health Tracker Pro - Login");
 
         } catch (Exception e) {
-            System.out.println("❌ Error loading login page: " + e.getMessage());
+            System.out.println("Error loading login page: " + e.getMessage());
             e.printStackTrace();
             showStatus("Failed to load login page: " + e.getMessage(), false);
         }

@@ -56,12 +56,12 @@ public class GoalService {
                 if (generatedKeys.next()) {
                     goal.setId(generatedKeys.getInt(1));
                 }
-                System.out.println("✅ Goal created successfully: " + goal.getGoalDescription());
+                System.out.println("Goal created successfully: " + goal.getGoalDescription());
                 return true;
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error creating goal: " + e.getMessage());
+            System.err.println("Error creating goal: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -100,12 +100,12 @@ public class GoalService {
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("✅ Goal updated successfully: " + goal.getGoalDescription());
+                System.out.println("Goal updated successfully: " + goal.getGoalDescription());
                 return true;
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error updating goal: " + e.getMessage());
+            System.err.println("Error updating goal: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -143,7 +143,7 @@ public class GoalService {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error fetching user goals: " + e.getMessage());
+            System.err.println("Error fetching user goals: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -168,7 +168,7 @@ public class GoalService {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error fetching goal by ID: " + e.getMessage());
+            System.err.println("Error fetching goal by ID: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -184,12 +184,12 @@ public class GoalService {
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("✅ Goal deleted successfully");
+                System.out.println("Goal deleted successfully");
                 return true;
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error deleting goal: " + e.getMessage());
+            System.err.println("Error deleting goal: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -208,10 +208,8 @@ public class GoalService {
                 goal.updateProgress(newValue);
                 updateGoal(goal);
 
-                // Kiểm tra xem có đạt mục tiêu mới không
                 if (goal.isAchieved() && goal.getAchievedAt() != null) {
-                    System.out.println("🎉 Goal achieved: " + goal.getGoalDescription());
-                    // Có thể thêm notification hoặc achievement system ở đây
+                    System.out.println("Goal achieved: " + goal.getGoalDescription());
                 }
             }
         }
@@ -269,7 +267,7 @@ public class GoalService {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error calculating exercise duration: " + e.getMessage());
+            System.err.println("Error calculating exercise duration: " + e.getMessage());
         }
 
         return 0.0;
@@ -300,7 +298,7 @@ public class GoalService {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Error fetching goal statistics: " + e.getMessage());
+            System.err.println("Error fetching goal statistics: " + e.getMessage());
         }
 
         return new GoalStatistics(0, 0, 0, 0);

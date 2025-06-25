@@ -126,39 +126,6 @@
     -fx-min-width: 200px;
 }
 
-.status-label-success {
-    -fx-text-fill: #16a34a;
-    -fx-font-weight: bold;
-}
-
-.status-label-error {
-    -fx-text-fill: #dc2626;
-    -fx-font-weight: bold;
-}
-
-/* History Scroll Pane */
-.history-scroll-pane {
-    -fx-background-color: transparent;
-    -fx-background: transparent;
-}
-
-.history-scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
-.history-scroll-pane .scroll-bar:vertical {
-    -fx-background-color: transparent;
-}
-
-.history-scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: #cbd5e1;
-    -fx-background-radius: 10px;
-}
-
-.history-scroll-pane .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #94a3b8;
-}
-
 .sidebar-button {
     -fx-background-color: transparent;
     -fx-text-fill: #b0c4de;
@@ -363,17 +330,6 @@
 .button-primary:hover {
     -fx-background-color: -primary-color-hover;
 }
-
-/* Status Label Styling */
-.status-label-success {
-    -fx-text-fill: -success-color;
-    -fx-font-weight: bold;
-}
-.status-label-error {
-    -fx-text-fill: -error-color;
-    -fx-font-weight: bold;
-}
-
 .chart {
     -fx-padding: 10px;
 }
@@ -559,12 +515,6 @@
     -fx-background-color: linear-gradient(to bottom, #2563eb, #1d4ed8);
     -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.4), 12, 0, 0, 4);
 }
-
-.primary-button:pressed {
-    -fx-background-color: linear-gradient(to bottom, #1d4ed8, #1e40af);
-    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.2), 4, 0, 0, 1);
-}
-
 /* --- COMPLETION PROGRESS BAR STYLING --- */
 .completion-progress-bar {
     -fx-background-color: #f1f5f9;
@@ -601,57 +551,6 @@
     -fx-background-color: #f9fafb;
     -fx-border-color: #9ca3af;
     -fx-text-fill: #374151;
-}
-
-/* Success Button Style (for completed actions) */
-.success-button {
-    -fx-background-color: linear-gradient(to bottom, #10b981, #059669);
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 8px;
-    -fx-padding: 10px 16px;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.3), 8, 0, 0, 2);
-}
-
-.success-button:hover {
-    -fx-background-color: linear-gradient(to bottom, #059669, #047857);
-    -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.4), 12, 0, 0, 4);
-}
-
-/* Warning Button Style (for overdue items) */
-.warning-button {
-    -fx-background-color: linear-gradient(to bottom, #f59e0b, #d97706);
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 8px;
-    -fx-padding: 10px 16px;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.3), 8, 0, 0, 2);
-}
-
-.warning-button:hover {
-    -fx-background-color: linear-gradient(to bottom, #d97706, #b45309);
-    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.4), 12, 0, 0, 4);
-}
-
-/* Danger Button Style (for delete actions) */
-.danger-button {
-    -fx-background-color: linear-gradient(to bottom, #ef4444, #dc2626);
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 8px;
-    -fx-padding: 10px 16px;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.3), 8, 0, 0, 2);
-}
-
-.danger-button:hover {
-    -fx-background-color: linear-gradient(to bottom, #dc2626, #b91c1c);
-    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.4), 12, 0, 0, 4);
 }
 
 /* --- GOALS TABLE STYLING --- */
@@ -744,12 +643,6 @@
     -fx-border-color: #9ca3af;
 }
 
-@media screen and (max-width: 768px) {
-    .refresh-button, .primary-button {
-        -fx-font-size: 12px;
-        -fx-padding: 8px 12px;
-    }
-}
 /* Giới hạn chiều rộng hộp thoại và căn giữa */
 .goal-dialog-container {
     -fx-min-width: 390px;
@@ -818,11 +711,6 @@
     -fx-border-radius: 7px;
 }
 
-.form-separator {
-    -fx-stroke: #e5e7eb;
-    -fx-opacity: 0.9;
-}
-
 .primary-button {
     -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
     -fx-text-fill: white;
@@ -852,42 +740,8 @@
     -fx-background-color: #e0e7ef;
 }
 
-.goal-dialog-container .HBox {
-    -fx-spacing: 12px;
-}
-
-.goal-dialog-container .VBox {
-    -fx-spacing: 7px;
-}
-
-/* Bố cục nút luôn nổi ở dưới cùng dialog, co lại khi màn hình nhỏ */
-.goal-dialog-container > .HBox {
-    -fx-padding: 0 0 5 0;
-    -fx-background-color: white;
-    -fx-border-radius: 0 0 16px 16px;
-    -fx-border-color: transparent;
-    -fx-spacing: 10px;
-}
-
-@media screen and (max-width: 600px) {
-    .goal-dialog-container {
-        -fx-pref-width: 98vw;
-        -fx-max-width: 99vw;
-        -fx-padding: 0;
-    }
-    .goal-dialog-form, .goal-dialog-header {
-        -fx-padding: 16 5 16 5;
-    }
-    .form-combo-box, .form-date-picker, .text-input-styled, .form-text-area {
-        -fx-pref-width: 96px;
-        -fx-max-width: 97px;
-    }
-}
-/* ===== CHAT INTERFACE PREMIUM STYLING - FIXED COLORS ===== */
-
-/* Chat Container - Background gradient đẹp */
 .chat-container {
-    -fx-background-color: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    -fx-background-color: linear-gradient(from 0% 100% to 100% 0%, #f8fafc, #e2e8f0);
 }
 
 /* Main content với nền trắng rõ ràng */
@@ -903,10 +757,10 @@
 
 /* Header styling với gradient xanh dương */
 .chat-header {
-    -fx-background-color: linear-gradient(45deg, #3b82f6, #1d4ed8);
+    -fx-background-color: white;
     -fx-background-radius: 16px;
     -fx-padding: 25px;
-    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.4), 15, 0, 0, 5);
+    -fx-effect: dropshadow(gaussian, #3b82f666, 15, 0, 0, 5);
 }
 
 .chat-title {
@@ -1044,12 +898,11 @@
 
 /* Online users header */
 .online-users-header {
-    -fx-background-color: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, #3b82f619, #1d4ed819);
     -fx-background-radius: 12px;
     -fx-padding: 12px 15px;
     -fx-spacing: 4px;
 }
-
 .online-users-title {
     -fx-text-fill: #374151;
     -fx-font-weight: bold;
@@ -1085,44 +938,8 @@
 }
 
 .online-users-list .list-cell:selected {
-    -fx-background-color: linear-gradient(90deg, rgba(59, 130, 246, 0.15), rgba(29, 78, 216, 0.15));
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, #3b82f626, #1d4ed826);
     -fx-text-fill: #1f2937;
-}
-
-/* Responsive design cho mobile */
-@media screen and (max-width: 768px) {
-    .chat-main-content {
-        -fx-padding: 15px;
-        -fx-background-radius: 16px;
-    }
-
-    .chat-header {
-        -fx-padding: 20px;
-        -fx-background-radius: 12px;
-    }
-
-    .chat-title {
-        -fx-font-size: 28px;
-    }
-
-    .chat-subtitle {
-        -fx-font-size: 14px;
-    }
-
-    .chat-input-container {
-        -fx-padding: 6px;
-        -fx-background-radius: 20px;
-    }
-
-    .chat-input-field {
-        -fx-padding: 10px 16px;
-        -fx-font-size: 13px;
-    }
-
-    .chat-send-button {
-        -fx-font-size: 12px;
-        -fx-pref-width: 90px;
-    }
 }
 
 /* Animation cho các phần tử */
@@ -1139,73 +956,4 @@
 .online-users-list .list-cell {
     -fx-transition-property: -fx-background-color, -fx-text-fill;
     -fx-transition-duration: 0.2s;
-}
-
-/* Hiệu ứng loading cho chat area */
-.chat-loading {
-    -fx-background-color: linear-gradient(90deg, #f1f5f9 25%, #e5e7eb 50%, #f1f5f9 75%);
-    -fx-background-size: 400% 100%;
-    -fx-animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-    0% {
-        -fx-background-position: -400% 0;
-    }
-    100% {
-        -fx-background-position: 400% 0;
-    }
-}
-
-/* Status indicators */
-.user-online-indicator {
-    -fx-background-color: #10b981;
-    -fx-background-radius: 50%;
-    -fx-pref-width: 8px;
-    -fx-pref-height: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.6), 4, 0, 0, 0);
-}
-
-.user-away-indicator {
-    -fx-background-color: #f59e0b;
-    -fx-background-radius: 50%;
-    -fx-pref-width: 8px;
-    -fx-pref-height: 8px;
-    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.6), 4, 0, 0, 0);
-}
-
-/* Message bubbles styling */
-.message-bubble-sent {
-    -fx-background-color: linear-gradient(45deg, #3b82f6, #1d4ed8);
-    -fx-background-radius: 18px 18px 4px 18px;
-    -fx-padding: 10px 15px;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 8, 0, 0, 2);
-}
-
-.message-bubble-received {
-    -fx-background-color: #f1f5f9;
-    -fx-background-radius: 18px 18px 18px 4px;
-    -fx-padding: 10px 15px;
-    -fx-text-fill: #374151;
-    -fx-border-color: #e2e8f0;
-    -fx-border-width: 1px;
-    -fx-border-radius: 18px 18px 18px 4px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 6, 0, 0, 1);
-}
-
-/* Emoji và icon styling */
-.emoji-button {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-font-size: 18px;
-    -fx-cursor: hand;
-    -fx-padding: 5px;
-    -fx-background-radius: 8px;
-    -fx-text-fill: #6b7280;
-}
-
-.emoji-button:hover {
-    -fx-background-color: rgba(59, 130, 246, 0.1);
-    -fx-text-fill: #374151;
 }

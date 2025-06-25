@@ -109,8 +109,6 @@ public class ForgotPasswordController implements Initializable {
                 // Check if email exists
                 boolean emailExists = userService.isEmailExists(email);
                 if (emailExists) {
-                    // In real application, you would send email here
-                    // For demo, we'll just simulate success
                     System.out.println("Email exists, would send reset link to: " + email);
                     return true;
                 } else {
@@ -130,7 +128,6 @@ public class ForgotPasswordController implements Initializable {
                     System.out.println("✅ Reset request processed successfully");
                     showStatus("Password reset link sent to your email! Check your inbox.", true);
 
-                    // Show additional instructions
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Reset Link Sent");
                     alert.setHeaderText("Check Your Email");
@@ -142,7 +139,6 @@ public class ForgotPasswordController implements Initializable {
                             "\n\nThe link will expire in 1 hour for security.");
                     alert.showAndWait();
 
-                    // Auto-redirect to login after 3 seconds
                     Task<Void> redirectTask = new Task<Void>() {
                         @Override
                         protected Void call() throws Exception {

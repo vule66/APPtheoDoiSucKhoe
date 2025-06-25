@@ -50,7 +50,7 @@ public class GoalDialogController {
         this.editingGoal = goal;
 
         if (goal != null) {
-            titleLabel.setText("✏️ Edit Goal");
+            titleLabel.setText("Edit Goal");
             goalTypeCombo.setValue(goal.getGoalType());
             descriptionField.setText(goal.getGoalDescription());
             targetValueField.setText(goal.getTargetValue() != null ? goal.getTargetValue().toString() : "");
@@ -60,7 +60,7 @@ public class GoalDialogController {
             targetDatePicker.setValue(goal.getTargetDate());
             priorityCombo.setValue(goal.getPriority());
         } else {
-            titleLabel.setText("🎯 Add New Goal");
+            titleLabel.setText("Add New Goal");
         }
     }
 
@@ -73,11 +73,11 @@ public class GoalDialogController {
     }
 
     private void handleSave() {
-        System.out.println("🔄 Handling save...");
+        System.out.println("Handling save...");
 
         // Validate input trước
         if (!validateInput()) {
-            System.out.println("❌ Validation failed");
+            System.out.println(" Validation failed");
             return;
         }
 
@@ -100,7 +100,7 @@ public class GoalDialogController {
                 try {
                     Double targetValue = Double.parseDouble(targetValueText);
                     goal.setTargetValue(targetValue);
-                    System.out.println("✅ Target value parsed: " + targetValue);
+                    System.out.println("Target value parsed: " + targetValue);
                 } catch (NumberFormatException e) {
                     showErrorAlert("Target value must be a valid number!");
                     return;
@@ -115,7 +115,7 @@ public class GoalDialogController {
                 try {
                     Double currentValue = Double.parseDouble(currentValueText);
                     goal.setCurrentValue(currentValue);
-                    System.out.println("✅ Current value parsed: " + currentValue);
+                    System.out.println("Current value parsed: " + currentValue);
                 } catch (NumberFormatException e) {
                     showErrorAlert("Current value must be a valid number!");
                     return;
@@ -125,7 +125,7 @@ public class GoalDialogController {
             }
 
             // Debug: In ra thông tin goal trước khi lưu
-            System.out.println("🔧 Goal info before save:");
+            System.out.println("Goal info before save:");
             System.out.println("- User ID: " + goal.getUserId());
             System.out.println("- Goal Type: " + goal.getGoalType());
             System.out.println("- Description: " + goal.getGoalDescription());
@@ -139,43 +139,43 @@ public class GoalDialogController {
             // Save or update
             boolean success;
             if (editingGoal == null) {
-                System.out.println("🔄 Creating new goal...");
+                System.out.println("Creating new goal...");
                 success = goalService.createGoal(goal);
             } else {
-                System.out.println("🔄 Updating existing goal...");
+                System.out.println("Updating existing goal...");
                 success = goalService.updateGoal(goal);
             }
 
             if (success) {
                 goalSaved = true;
-                System.out.println("✅ Goal saved successfully!");
+                System.out.println("Goal saved successfully!");
                 showSuccessAlert("Goal saved successfully!");
                 dialogStage.close();
             } else {
-                System.out.println("❌ Failed to save goal!");
+                System.out.println("Failed to save goal!");
                 showErrorAlert("Failed to save goal! Please check the console for details.");
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Unexpected error in handleSave: " + e.getMessage());
+            System.err.println("Unexpected error in handleSave: " + e.getMessage());
             e.printStackTrace();
             showErrorAlert("An unexpected error occurred: " + e.getMessage());
         }
     }
 
     private boolean validateInput() {
-        System.out.println("🔄 Validating input...");
+        System.out.println("Validating input...");
 
         // Check current user
         if (currentUser == null) {
-            System.out.println("❌ Current user is null!");
+            System.out.println("Current user is null!");
             showErrorAlert("User information is missing!");
             return false;
         }
 
         // Check goal type
         if (goalTypeCombo.getValue() == null) {
-            System.out.println("❌ Goal type not selected");
+            System.out.println("Goal type not selected");
             showErrorAlert("Please select a goal type.");
             goalTypeCombo.requestFocus();
             return false;
@@ -183,7 +183,7 @@ public class GoalDialogController {
 
         // Check description
         if (descriptionField.getText() == null || descriptionField.getText().trim().isEmpty()) {
-            System.out.println("❌ Description is empty");
+            System.out.println("Description is empty");
             showErrorAlert("Please enter a goal description.");
             descriptionField.requestFocus();
             return false;
@@ -192,7 +192,7 @@ public class GoalDialogController {
         // Check target value
         String targetValueText = targetValueField.getText();
         if (targetValueText == null || targetValueText.trim().isEmpty()) {
-            System.out.println("❌ Target value is empty");
+            System.out.println("Target value is empty");
             showErrorAlert("Please enter a target value.");
             targetValueField.requestFocus();
             return false;
@@ -202,7 +202,7 @@ public class GoalDialogController {
         try {
             Double.parseDouble(targetValueText.trim());
         } catch (NumberFormatException e) {
-            System.out.println("❌ Target value is not a valid number: " + targetValueText);
+            System.out.println("Target value is not a valid number: " + targetValueText);
             showErrorAlert("Target value must be a valid number.");
             targetValueField.requestFocus();
             return false;
@@ -210,7 +210,7 @@ public class GoalDialogController {
 
         // Check target unit
         if (targetUnitField.getText() == null || targetUnitField.getText().trim().isEmpty()) {
-            System.out.println("❌ Target unit is empty");
+            System.out.println("Target unit is empty");
             showErrorAlert("Please enter a unit for the target value.");
             targetUnitField.requestFocus();
             return false;
@@ -222,7 +222,7 @@ public class GoalDialogController {
             try {
                 Double.parseDouble(currentValueText.trim());
             } catch (NumberFormatException e) {
-                System.out.println("❌ Current value is not a valid number: " + currentValueText);
+                System.out.println("Current value is not a valid number: " + currentValueText);
                 showErrorAlert("Current value must be a valid number.");
                 currentValueField.requestFocus();
                 return false;
@@ -231,21 +231,21 @@ public class GoalDialogController {
 
         // Check dates
         if (startDatePicker.getValue() == null) {
-            System.out.println("❌ Start date not selected");
+            System.out.println("Start date not selected");
             showErrorAlert("Please select a start date.");
             startDatePicker.requestFocus();
             return false;
         }
 
         if (targetDatePicker.getValue() == null) {
-            System.out.println("❌ Target date not selected");
+            System.out.println("Target date not selected");
             showErrorAlert("Please select a target date.");
             targetDatePicker.requestFocus();
             return false;
         }
 
         if (targetDatePicker.getValue().isBefore(startDatePicker.getValue())) {
-            System.out.println("❌ Target date is before start date");
+            System.out.println("Target date is before start date");
             showErrorAlert("Target date cannot be before start date.");
             targetDatePicker.requestFocus();
             return false;
@@ -253,13 +253,13 @@ public class GoalDialogController {
 
         // Check priority
         if (priorityCombo.getValue() == null) {
-            System.out.println("❌ Priority not selected");
+            System.out.println("Priority not selected");
             showErrorAlert("Please select a priority level.");
             priorityCombo.requestFocus();
             return false;
         }
 
-        System.out.println("✅ Validation passed!");
+        System.out.println("Validation passed!");
         return true;
     }
 

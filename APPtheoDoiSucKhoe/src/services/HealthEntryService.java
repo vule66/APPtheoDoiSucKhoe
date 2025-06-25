@@ -166,7 +166,6 @@ public class HealthEntryService {
                 return date.toLocalDate();
             }
         } catch (SQLException e) {
-            // Bỏ qua lỗi và thử cách khác
         }
 
         try {

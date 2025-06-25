@@ -120,9 +120,6 @@ public class Goal {
 
         // Đối với mục tiêu giảm cân, logic khác biệt
         if (goalType == GoalType.WEIGHT_LOSS) {
-            // Giả sử targetValue là cân nặng mục tiêu, currentValue là cân nặng hiện tại
-            // Progress = (initial_weight - current_weight) / (initial_weight - target_weight)
-            // Cần thêm initial_weight vào model hoặc tính toán khác
             return Math.min(progress, 1.0);
         }
 

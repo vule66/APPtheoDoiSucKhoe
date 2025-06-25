@@ -72,8 +72,6 @@ public class AnalyticsController implements Initializable {
         entryService = new HealthEntryService();
 
         setupTimePeriodComboBox();
-
-        // Mặc định là 30 ngày gần nhất
         timePeriodComboBox.getSelectionModel().select("Last 30 Days");
 
         loadData();
@@ -89,7 +87,6 @@ public class AnalyticsController implements Initializable {
         );
         timePeriodComboBox.setItems(options);
 
-        // Xử lý sự kiện khi người dùng chọn khoảng thời gian
         timePeriodComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 calculateDateRange(newVal);
@@ -103,25 +100,24 @@ public class AnalyticsController implements Initializable {
 
         switch (period) {
             case "Last 7 Days":
-                startDate = endDate.minusDays(6); // 7 days including today
+                startDate = endDate.minusDays(6);
                 break;
             case "Last 30 Days":
-                startDate = endDate.minusDays(29); // 30 days including today
+                startDate = endDate.minusDays(29);
                 break;
             case "Last 90 Days":
-                startDate = endDate.minusDays(89); // 90 days including today
+                startDate = endDate.minusDays(89);
                 break;
             case "Last 180 Days":
-                startDate = endDate.minusDays(179); // 180 days including today
+                startDate = endDate.minusDays(179);
                 break;
             case "Last 365 Days":
-                startDate = endDate.minusDays(364); // 365 days including today
+                startDate = endDate.minusDays(364);
                 break;
             default:
-                startDate = endDate.minusDays(29); // Default to 30 days
+                startDate = endDate.minusDays(29);
         }
 
-        // Cập nhật nhãn ngày
         startDateLabel.setText(startDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
         endDateLabel.setText(endDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
@@ -164,7 +160,6 @@ public class AnalyticsController implements Initializable {
     }
 
     private void calculateStatistics() {
-        // Tính toán các thống kê
 
         // Weight Statistics
         DoubleSummaryStatistics weightStats = healthData.stream()

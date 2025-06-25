@@ -7,7 +7,6 @@ import javafx.scene.text.Text;
 import models.HealthEntry;
 import models.User;
 import services.HealthEntryService;
-
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;

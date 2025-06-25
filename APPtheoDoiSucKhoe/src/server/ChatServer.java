@@ -12,7 +12,6 @@ public class ChatServer {
     private static ExecutorService pool = Executors.newFixedThreadPool(10);
     private static final Object LOCK = new Object();
 
-    // Lưu trữ lịch sử tin nhắn (giới hạn 50 tin nhắn gần nhất)
     private static final List<String> messageHistory = new ArrayList<>(50);
 
     public static void main(String[] args) throws IOException {
@@ -24,10 +23,7 @@ public class ChatServer {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Người dùng mới kết nối: " + clientSocket.getInetAddress().getHostAddress());
 
-                // Tạo handler nhưng CHƯA thêm vào danh sách clients
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
-
-                // Xử lý trong một thread riêng
                 pool.execute(clientHandler);
             }
         } catch (IOException e) {
@@ -37,26 +33,20 @@ public class ChatServer {
         }
     }
 
-    // Thay đổi cách quản lý client
     public static synchronized void addClient(ClientHandler clientHandler) {
         if (clientHandler == null || clientHandler.getUsername() == null) {
-            System.out.println("⚠️ Không thể thêm client không hợp lệ");
+            System.out.println("Không thể thêm client không hợp lệ");
             return;
         }
 
-        // Kiểm tra và xóa client cũ trước khi thêm client mới
         String username = clientHandler.getUsername();
         removeClientByUsername(username);
 
-        // Thêm client mới
         clients.add(clientHandler);
-        System.out.println("✅ Đã thêm client: " + username + ", hiện có " + clients.size() + " người dùng online");
-
-        // Cập nhật danh sách người dùng ngay lập tức
+        System.out.println("Đã thêm client: " + username + ", hiện có " + clients.size() + " người dùng online");
         broadcastUserList();
     }
 
-    // Phương thức mới để xóa client theo username
     public static synchronized void removeClientByUsername(String username) {
         if (username == null) return;
 
@@ -64,11 +54,11 @@ public class ChatServer {
         while (iterator.hasNext()) {
             ClientHandler client = iterator.next();
             if (username.equals(client.getUsername())) {
-                System.out.println("❌ Xóa client cũ: " + username);
+                System.out.println("Xóa client cũ: " + username);
                 try {
                     client.disconnect();
                 } catch (Exception e) {
-                    System.out.println("⚠️ Lỗi khi đóng kết nối cũ: " + e.getMessage());
+                    System.out.println("Lỗi khi đóng kết nối cũ: " + e.getMessage());
                 }
                 iterator.remove();
             }
@@ -81,7 +71,7 @@ public class ChatServer {
 
         boolean removed = clients.remove(client);
         if (removed) {
-            System.out.println("❌ Đã xóa client: " + client.getUsername() + ", còn lại " + clients.size() + " người dùng online");
+            System.out.println("Đã xóa client: " + client.getUsername() + ", còn lại " + clients.size() + " người dùng online");
             // Cập nhật danh sách người dùng
             broadcastUserList();
         }
@@ -92,7 +82,7 @@ public class ChatServer {
         List<String> users = getOnlineUsers();
 
         if (users.isEmpty()) {
-            System.out.println("⚠️ Không có người dùng online");
+            System.out.println("Không có người dùng online");
             return;
         }
 
@@ -104,16 +94,14 @@ public class ChatServer {
         }
 
         String userListMessage = userList.toString();
-        System.out.println("👥 Phát sóng danh sách người dùng: " + userListMessage);
+        System.out.println("Phát sóng danh sách người dùng: " + userListMessage);
 
         synchronized (clients) {
-            // Tạo bản sao để tránh ConcurrentModificationException
             for (ClientHandler client : new HashSet<>(clients)) {
                 try {
                     client.sendMessage(userListMessage);
                 } catch (Exception e) {
-                    System.out.println("⚠️ Lỗi khi gửi danh sách người dùng đến " + client.getUsername() + ": " + e.getMessage());
-                    // Nếu gặp lỗi, xóa client không phản hồi
+                    System.out.println("Lỗi khi gửi danh sách người dùng đến " + client.getUsername() + ": " + e.getMessage());
                     removeClient(client);
                 }
             }

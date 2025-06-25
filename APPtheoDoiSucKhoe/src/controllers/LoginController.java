@@ -20,7 +20,6 @@ public class LoginController implements Initializable {
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
-    @FXML private CheckBox rememberMeCheck;
     @FXML private Button loginButton;
     @FXML private Hyperlink forgotPasswordLink;
     @FXML private Hyperlink signUpLink;
@@ -31,15 +30,15 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("✅ LoginController initialized!");
+        System.out.println("LoginController initialized!");
 
         try {
             // Initialize database first
             DatabaseManager.getInstance();
             userService = new UserService();
-            System.out.println("✅ UserService created successfully!");
+            System.out.println("UserService created successfully!");
         } catch (Exception e) {
-            System.out.println("❌ Error creating UserService: " + e.getMessage());
+            System.out.println("Error creating UserService: " + e.getMessage());
             e.printStackTrace();
             showStatus("Database connection failed. Please restart the application.", false);
         }
@@ -66,7 +65,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleLogin(ActionEvent event) {
-        System.out.println("🚀 LOGIN BUTTON CLICKED!");
+        System.out.println("LOGIN BUTTON CLICKED!");
 
         String username = usernameField.getText().trim();
         String password = passwordField.getText();
@@ -104,11 +103,11 @@ public class LoginController implements Initializable {
                 }
 
                 if (user != null) {
-                    System.out.println("✅ Authentication successful! User: " + user.toString());
+                    System.out.println("Authentication successful! User: " + user.toString());
                     showStatus("Login successful! Welcome " + user.getFullName(), true);
                     openMainApplication(user);
                 } else {
-                    System.out.println("❌ Authentication failed - invalid credentials");
+                    System.out.println("Authentication failed - invalid credentials");
                     showStatus("Invalid username or password. Please try again.", false);
                 }
             }
@@ -119,7 +118,7 @@ public class LoginController implements Initializable {
                 if (loadingIndicator != null) {
                     loadingIndicator.setVisible(false);
                 }
-                System.out.println("❌ Authentication task failed: " + getException().getMessage());
+                System.out.println("Authentication task failed: " + getException().getMessage());
                 showStatus("Login failed. Please try again.", false);
             }
         };
@@ -131,7 +130,7 @@ public class LoginController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            System.out.println("⚠️ Lỗi khi dọn dẹp các kết nối cũ: " + e.getMessage());
+            System.out.println("Lỗi khi dọn dẹp các kết nối cũ: " + e.getMessage());
         }
         Thread authThread = new Thread(authTask);
         authThread.setDaemon(true);
@@ -149,7 +148,7 @@ public class LoginController implements Initializable {
             HealthTrackerController controller = loader.getController();
             if (controller != null) {
                 controller.setCurrentUser(user);
-                System.out.println("✅ User data passed to HealthTrackerController");
+                System.out.println("User data passed to HealthTrackerController");
             }
 
             Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -159,10 +158,10 @@ public class LoginController implements Initializable {
             stage.setTitle("Health Tracker Pro - Dashboard");
             stage.setMaximized(true);
 
-            System.out.println("✅ Main application loaded successfully!");
+            System.out.println("Main application loaded successfully!");
 
         } catch (Exception e) {
-            System.out.println("❌ Error loading main application: " + e.getMessage());
+            System.out.println("Error loading main application: " + e.getMessage());
             e.printStackTrace();
             showStatus("Failed to load main application: " + e.getMessage(), false);
         }
@@ -175,7 +174,7 @@ public class LoginController implements Initializable {
             // Corrected path to the FXML file
             URL fxmlLocation = getClass().getResource("/application/Register.fxml");
             if (fxmlLocation == null) {
-                System.out.println("❌ Critical Error: Cannot find /application/Register.fxml. Check the path.");
+                System.out.println("Critical Error: Cannot find /application/Register.fxml. Check the path.");
                 showStatus("Error: Registration form is missing.", false);
                 return;
             }
@@ -188,7 +187,7 @@ public class LoginController implements Initializable {
             stage.setTitle("Health Tracker Pro - Sign Up");
 
         } catch (IOException e) {
-            System.out.println("❌ Error loading registration page: " + e.getMessage());
+            System.out.println("Error loading registration page: " + e.getMessage());
             e.printStackTrace();
             showStatus("Failed to load registration page: " + e.getMessage(), false);
         }
@@ -200,7 +199,7 @@ public class LoginController implements Initializable {
         try {
             URL fxmlLocation = getClass().getResource("/application/ForgotPassword.fxml");
             if (fxmlLocation == null) {
-                System.out.println("❌ Critical Error: Cannot find /application/ForgotPassword.fxml. Check the path.");
+                System.out.println("Critical Error: Cannot find /application/ForgotPassword.fxml. Check the path.");
                 showStatus("Error: Forgot password form is missing.", false);
                 return;
             }
@@ -213,7 +212,7 @@ public class LoginController implements Initializable {
             stage.setTitle("Health Tracker Pro - Reset Password");
 
         } catch (IOException e) {
-            System.out.println("❌ Error loading forgot password page: " + e.getMessage());
+            System.out.println("Error loading forgot password page: " + e.getMessage());
             e.printStackTrace();
             showStatus("Failed to load forgot password page: " + e.getMessage(), false);
         }

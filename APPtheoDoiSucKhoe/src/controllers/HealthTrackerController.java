@@ -65,8 +65,6 @@ public class HealthTrackerController implements Initializable {
             mainContentPane.getChildren().setAll(new Label("Critical Error: Could not load user data."));
         }
     }
-
-    // Thêm biến thành viên để lưu trữ controller hiện tại
     private ChatController currentChatController;
 
     @FXML

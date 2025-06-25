@@ -70,7 +70,6 @@ public class HealthTrackerApp extends Application {
         boolean serverRunning = isServerRunning("localhost", 9876);
 
         if (!serverRunning) {
-            // Chỉ khởi động máy chủ nếu chưa có máy chủ nào đang chạy
             Thread serverThread = new Thread(() -> {
                 try {
                     System.out.println("Khởi động máy chủ chat mới...");
@@ -92,7 +91,6 @@ public class HealthTrackerApp extends Application {
             System.out.println("Đã phát hiện máy chủ chat đang chạy, sẽ kết nối đến máy chủ hiện có");
         }
 
-        // Khởi động ứng dụng JavaFX
         launch(args);
     }
 
@@ -102,7 +100,7 @@ public class HealthTrackerApp extends Application {
             socket.connect(new InetSocketAddress(host, port), 1000);
             return true;
         } catch (IOException e) {
-            return false; // Không thể kết nối = máy chủ chưa chạy
+            return false;
         }
     }
 }

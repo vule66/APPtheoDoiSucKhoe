@@ -13,9 +13,9 @@ import models.HealthEntry;
 import models.User;
 import services.HealthEntryService;
 import services.UserService;
-import database.DatabaseManager;  // Thêm import này
+import database.DatabaseManager;
 
-import java.sql.Connection;        // Thêm 3 import này
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
@@ -30,7 +30,6 @@ public class DataEntryController {
     @FXML private TextField weightField;
     @FXML private TextField bloodPressureField;
     @FXML private TextField sleepField;
-    @FXML private Button saveButton;
     @FXML private Label statusLabel;
     @FXML private Text bmiValueLabel;
     @FXML private Text bmiCategoryLabel;
@@ -57,39 +56,10 @@ public class DataEntryController {
 
     public void setCurrentUser(User user) {
         this.currentUser = user;
-        // Tải lại thông tin user mới nhất từ DB để có chiều cao
         this.currentUser = userService.findUserById(user.getId()).orElse(user);
 
         loadEntryForDate(datePicker.getValue());
         updateSidePanel();
-    }
-
-    // Chỉ giữ một phiên bản của debugDatabase()
-    @FXML
-    private void debugDatabase() {
-        try {
-            Connection conn = DatabaseManager.getInstance().getConnection();
-            // Kiểm tra bảng có tồn tại không
-            Statement checkStmt = conn.createStatement();
-            ResultSet rs = checkStmt.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='health_data'");
-            boolean tableExists = rs.next();
-            System.out.println("Table health_data exists: " + tableExists);
-            rs.close();
-
-            if (tableExists) {
-                // Thử INSERT trực tiếp
-                String sql = "INSERT INTO health_data (user_id, record_date, weight, systolic_bp, diastolic_bp, sleep_hours) " +
-                        "VALUES (1, '2025-06-21', 70.5, 120, 80, 7.5)";
-                Statement stmt = conn.createStatement();
-                int result = stmt.executeUpdate(sql);
-                System.out.println("Manual insert result: " + result + " rows affected");
-            } else {
-                System.err.println("ERROR: Table health_data does not exist!");
-            }
-        } catch (SQLException e) {
-            System.err.println("Debug INSERT error: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -149,7 +119,6 @@ public class DataEntryController {
             }
         }
 
-        // Thêm phần xử lý các trường mới
         Integer steps = null;
         if (stepsField != null && !stepsField.getText().trim().isEmpty()) {
             try {
@@ -190,17 +159,12 @@ public class DataEntryController {
             }
         }
 
-        // Tạo đối tượng HealthEntry (CHỈ TẠO MỘT LẦN)
-        // XÓA dòng tạo entry ở đây nếu đã có
-
-        // Sử dụng constructor mới với các trường cơ bản
         HealthEntry entry = new HealthEntry(currentUser.getId(), entryDate);
         entry.setWeight(weight);
         entry.setSystolicBp(systolicBp);
         entry.setDiastolicBp(diastolicBp);
         entry.setSleepHours(sleep);
 
-        // Set các giá trị mới
         entry.setSteps(steps);
         entry.setHeartRate(heartRate);
         entry.setCalories(calories);
@@ -209,7 +173,6 @@ public class DataEntryController {
         System.out.println("DEBUG - Entry created: " + entry);
 
         try {
-            // Gọi phương thức lưu thực sự
             entryService.saveOrUpdateEntry(entry);
             showStatusMessage("Entry saved successfully!", false);
             updateSidePanel();
@@ -222,8 +185,6 @@ public class DataEntryController {
         }
     }
 
-
-    // Phần code còn lại giữ nguyên
     private void loadEntryForDate(LocalDate date) {
         if (currentUser == null) return;
         try {
@@ -234,7 +195,6 @@ public class DataEntryController {
                 bloodPressureField.setText(entry.getBloodPressure() != null ? entry.getBloodPressure() : "");
                 sleepField.setText(entry.getSleepHours() != null ? String.valueOf(entry.getSleepHours()) : "");
 
-                // Điền các trường mới
                 stepsField.setText(entry.getSteps() != null ? String.valueOf(entry.getSteps()) : "");
                 heartRateField.setText(entry.getHeartRate() != null ? String.valueOf(entry.getHeartRate()) : "");
                 caloriesField.setText(entry.getCalories() != null ? String.valueOf(entry.getCalories()) : "");

@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.UUID;
 
 public class UserService {
     private final Connection connection;
@@ -74,7 +73,7 @@ public class UserService {
 
     public boolean registerUser(User user, String password) {
         try {
-            System.out.println("📝 Registering user: " + user.getUsername());
+            System.out.println("Registering user: " + user.getUsername());
 
             String hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 
@@ -94,16 +93,16 @@ public class UserService {
                 int result = stmt.executeUpdate();
 
                 if (result > 0) {
-                    System.out.println("✅ User registered successfully: " + user.getUsername());
+                    System.out.println("User registered successfully: " + user.getUsername());
                     return true;
                 } else {
-                    System.out.println("❌ Failed to register user: " + user.getUsername());
+                    System.out.println("Failed to register user: " + user.getUsername());
                     return false;
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Database error during registration: " + e.getMessage());
+            System.out.println("Database error during registration: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -121,7 +120,7 @@ public class UserService {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error checking username: " + e.getMessage());
+            System.out.println("Error checking username: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -139,77 +138,7 @@ public class UserService {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error checking email: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public String generatePasswordResetToken(String email) {
-        try {
-            String checkUserSql = "SELECT id FROM users WHERE email = ?";
-            try (PreparedStatement checkStmt = connection.prepareStatement(checkUserSql)) {
-                checkStmt.setString(1, email);
-                try (ResultSet rs = checkStmt.executeQuery()) {
-                    if (rs.next()) {
-                        int userId = rs.getInt("id");
-                        String token = UUID.randomUUID().toString();
-
-                        String insertTokenSql = """
-                            INSERT INTO password_reset_tokens (user_id, token, expires_at)
-                            VALUES (?, ?, datetime('now', '+1 hour'))
-                        """;
-                        try (PreparedStatement insertStmt = connection.prepareStatement(insertTokenSql)) {
-                            insertStmt.setInt(1, userId);
-                            insertStmt.setString(2, token);
-                            insertStmt.executeUpdate();
-                        }
-
-                        System.out.println("✅ Password reset token generated for: " + email);
-                        return token;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("❌ Error generating reset token: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean resetPassword(String token, String newPassword) {
-        try {
-            String checkTokenSql = """
-                SELECT user_id FROM password_reset_tokens
-                WHERE token = ? AND expires_at > datetime('now') AND used = FALSE
-            """;
-            try (PreparedStatement checkStmt = connection.prepareStatement(checkTokenSql)) {
-                checkStmt.setString(1, token);
-                try (ResultSet rs = checkStmt.executeQuery()) {
-                    if (rs.next()) {
-                        int userId = rs.getInt("user_id");
-                        String hashedPassword = BCrypt.withDefaults().hashToString(12, newPassword.toCharArray());
-
-                        String updatePasswordSql = "UPDATE users SET password = ? WHERE id = ?";
-                        try (PreparedStatement updateStmt = connection.prepareStatement(updatePasswordSql)) {
-                            updateStmt.setString(1, hashedPassword);
-                            updateStmt.setInt(2, userId);
-                            updateStmt.executeUpdate();
-                        }
-
-                        String markUsedSql = "UPDATE password_reset_tokens SET used = TRUE WHERE token = ?";
-                        try (PreparedStatement markStmt = connection.prepareStatement(markUsedSql)) {
-                            markStmt.setString(1, token);
-                            markStmt.executeUpdate();
-                        }
-
-                        System.out.println("✅ Password reset successfully for user ID: " + userId);
-                        return true;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("❌ Error resetting password: " + e.getMessage());
+            System.out.println("Error checking email: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -223,7 +152,7 @@ public class UserService {
                 stmt.executeUpdate();
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error updating last login: " + e.getMessage());
+            System.out.println("Error updating last login: " + e.getMessage());
             e.printStackTrace();
         }
     }

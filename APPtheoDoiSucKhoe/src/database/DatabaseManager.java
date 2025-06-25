@@ -9,11 +9,11 @@ public class DatabaseManager {
 
     private DatabaseManager() {
         try {
-            System.out.println("🔄 Initializing Enhanced DatabaseManager...");
+            System.out.println("Initializing Enhanced DatabaseManager...");
 
             // Load SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
-            System.out.println("✅ SQLite JDBC driver loaded successfully!");
+            System.out.println("SQLite JDBC driver loaded successfully!");
 
             connection = DriverManager.getConnection(DB_URL);
 
@@ -22,16 +22,16 @@ public class DatabaseManager {
             stmt.execute("PRAGMA foreign_keys = ON;");
             stmt.close();
 
-            System.out.println("✅ Database connection established: " + DB_URL);
+            System.out.println("Database connection established: " + DB_URL);
 
             // Check if migration is needed
             checkAndMigrate();
             createTables();
             createIndexes();
-            System.out.println("✅ Enhanced Database initialized successfully!");
+            System.out.println("Enhanced Database initialized successfully!");
 
         } catch (Exception e) {
-            System.out.println("❌ Database initialization failed: " + e.getMessage());
+            System.out.println("Database initialization failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -55,12 +55,12 @@ public class DatabaseManager {
 
             if (rs.next()) {
                 // Old structure exists, migrate it
-                System.out.println("🔄 Migrating old database structure...");
+                System.out.println("Migrating old database structure...");
                 Statement stmt = connection.createStatement();
 
                 // Rename old column
                 stmt.execute("ALTER TABLE health_data RENAME COLUMN date TO record_date");
-                System.out.println("✅ Migrated 'date' column to 'record_date'");
+                System.out.println("Migrated 'date' column to 'record_date'");
 
                 stmt.close();
             }
@@ -68,7 +68,7 @@ public class DatabaseManager {
 
         } catch (SQLException e) {
             // Column might not exist or already migrated
-            System.out.println("ℹ️ Database migration check: " + e.getMessage());
+            System.out.println("ℹDatabase migration check: " + e.getMessage());
         }
     }
 
@@ -229,10 +229,10 @@ public class DatabaseManager {
             addColumnIfNotExists("users", "updated_at", "DATETIME DEFAULT CURRENT_TIMESTAMP");
 
             stmt.close();
-            System.out.println("✅ Enhanced tables created successfully!");
+            System.out.println("Enhanced tables created successfully!");
 
         } catch (SQLException e) {
-            System.out.println("❌ Error creating tables: " + e.getMessage());
+            System.out.println("Error creating tables: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -245,14 +245,23 @@ public class DatabaseManager {
             if (!rs.next()) {
                 // Column doesn't exist, add it
                 Statement stmt = connection.createStatement();
-                stmt.execute("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnType);
+                if (columnType.contains("DEFAULT CURRENT_TIMESTAMP")) {
+                    // Add column without default value first
+                    String adjustedColumnType = columnType.replace("DEFAULT CURRENT_TIMESTAMP", "");
+                    stmt.execute("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + adjustedColumnType);
+
+                    // Update existing rows with CURRENT_TIMESTAMP
+                    stmt.execute("UPDATE " + tableName + " SET " + columnName + " = CURRENT_TIMESTAMP");
+                } else {
+                    stmt.execute("ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnType);
+                }
                 stmt.close();
-                System.out.println("✅ Added column " + columnName + " to " + tableName);
+                System.out.println("Added column " + columnName + " to " + tableName);
             }
             rs.close();
 
         } catch (SQLException e) {
-            System.out.println("⚠️ Could not add column " + columnName + " to " + tableName + ": " + e.getMessage());
+            System.out.println("Could not add column " + columnName + " to " + tableName + ": " + e.getMessage());
         }
     }
 
@@ -274,15 +283,15 @@ public class DatabaseManager {
                 try {
                     stmt.execute(index);
                 } catch (SQLException e) {
-                    System.out.println("⚠️ Could not create index: " + e.getMessage());
+                    System.out.println("Could not create index: " + e.getMessage());
                 }
             }
 
             stmt.close();
-            System.out.println("✅ Database indexes created successfully!");
+            System.out.println("Database indexes created successfully!");
 
         } catch (SQLException e) {
-            System.out.println("❌ Error creating indexes: " + e.getMessage());
+            System.out.println("Error creating indexes: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -296,10 +305,10 @@ public class DatabaseManager {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("✅ Database connection closed");
+                System.out.println("Database connection closed");
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error closing connection: " + e.getMessage());
+            System.out.println("Error closing connection: " + e.getMessage());
             e.printStackTrace();
         }
     }
